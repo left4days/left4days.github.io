@@ -1,0 +1,57 @@
+import cx from 'classnames';
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function Layout({ direction, jc, ai, noFlex, multiStr, hidden, disabled, className, children, ...params }) {
+    const classNames = cx(
+        className,
+        'layout',
+        noFlex && 'l_no_flex',
+        direction === 'column' && 'layout_column',
+        multiStr && 'l_wrap',
+        hidden && 'l_hidden',
+        jc && `l_jc_${jc}`,
+        ai && `l_ai_${ai}`,
+        disabled && 'l_disabled'
+    );
+
+    return (
+        <div className={classNames} {...params}>
+            {children}
+        </div>
+    );
+}
+
+Layout.displayName = 'Layout';
+Layout.PropTypes = {
+    noFlex: PropTypes.bool,
+    hidden: PropTypes.bool,
+    multiStr: PropTypes.bool,
+    disabled: PropTypes.bool,
+    onScroll: PropTypes.func,
+    tagName: PropTypes.string,
+    className: PropTypes.string,
+    direction: PropTypes.oneOf(['row', 'column']),
+    ai: PropTypes.oneOf(['flex-start', 'center', 'stretch', 'flex-end']),
+    jc: PropTypes.oneOf(['flex-start', 'center', 'stretch', 'flex-end', 'space-around', 'space-between']),
+};
+
+Layout.defaultProps = {};
+
+function Row({ props, children }) {
+    return (
+        <Layout {...props} direction="row">
+            {children}
+        </Layout>
+    );
+}
+
+function Column({ props, children }) {
+    return (
+        <Layout {...props} direction="column">
+            {children}
+        </Layout>
+    );
+}
+
+export { Row, Column };
