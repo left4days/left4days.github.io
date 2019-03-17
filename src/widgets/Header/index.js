@@ -1,8 +1,8 @@
 import React from 'react';
-
+import { Column } from 'ui/Layout';
 
 function Header() {
-    return (
-
-    )
+    return <Column>sss</Column>;
 }
+
+export { Header };

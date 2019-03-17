@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import style from './style.scss';
 
 function Layout({ direction, jc, ai, noFlex, multiStr, hidden, disabled, className, children, ...params }) {
     const classNames = cx(
