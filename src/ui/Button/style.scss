@@ -1,8 +1,8 @@
 $transitionHover: ease-in 200ms;
 $transitionActive: ease-in 150ms;
 
-$btn-void: $orange, $white, $orange, $white, $orange, $white, $grey, $white;
-$btn-fill: transparent, $white, transparent, $white, transparent, $white, $grey, $white;
+$btn-void: $orange, $white, #ff5100d9, $white, #ff5100d1, $white, $grey, $white;
+$btn-fill: transparent, $white, #ff510047, $white, transparent, $white, $grey, $white;
 @mixin btn-style(
   $colorBgDefault,
   $colorDefault,
@@ -33,9 +33,10 @@ $btn-fill: transparent, $white, transparent, $white, transparent, $white, $grey,
 
 .ux-button {
   @include base-sizes();
+  @include base-margins();
   height: 27px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   border-radius: 5px;
   border: none;
   text-transform: uppercase;
@@ -63,4 +64,5 @@ $btn-fill: transparent, $white, transparent, $white, transparent, $white, $grey,
       }
     }
   }
+
 }

@@ -1,0 +1,29 @@
+.modal {
+  display: none;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  &_open {
+    display: flex;
+  }
+
+  &__inner {
+    width: 350px;
+    padding: 20px 40px;
+    background-color: $bgDark;
+    border: 1px solid $orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+
+  }
+}

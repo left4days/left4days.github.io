@@ -5,13 +5,19 @@ import fireCudaLogo from 'statics/logo_firecuda.svg';
 import logo from 'statics/logo.svg';
 import style from './style.scss';
 
-function Header() {
+function Header({ handleModal }) {
     return (
-        <Row className={style.header} ai="center" jc="space-between">
-            <img src={fireCudaLogo} alt="firecuda" />
-            <img src={logo} alt="logo" />
-            <HeaderAuth />
-        </Row>
+        <Column className={style.header} ai="center" jc="space-between">
+            <Row className={style.header__container}>
+                <Column jc="flex-start">
+                    <img className={style.header__logo} src={fireCudaLogo} alt="firecuda" />
+                </Column>
+                <Column>
+                    <img className={style.header__logo} src={logo} alt="logo" />
+                </Column>
+                <HeaderAuth handleModal={handleModal} />
+            </Row>
+        </Column>
     );
 }
 
