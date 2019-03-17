@@ -5,7 +5,6 @@ import style from './style.scss';
 
 function Layout({ direction, jc, ai, noFlex, multiStr, hidden, disabled, className, children, ...params }) {
     const classNames = cx(
-        className,
         'layout',
         noFlex && 'l_no_flex',
         direction === 'column' && 'layout_column',
@@ -13,7 +12,8 @@ function Layout({ direction, jc, ai, noFlex, multiStr, hidden, disabled, classNa
         hidden && 'l_hidden',
         jc && `l_jc_${jc}`,
         ai && `l_ai_${ai}`,
-        disabled && 'l_disabled'
+        disabled && 'l_disabled',
+        className
     );
 
     return (
@@ -39,7 +39,8 @@ Layout.PropTypes = {
 
 Layout.defaultProps = {};
 
-function Row({ props, children }) {
+function Row(props) {
+    const { children } = props;
     return (
         <Layout {...props} direction="row">
             {children}
@@ -47,7 +48,8 @@ function Row({ props, children }) {
     );
 }
 
-function Column({ props, children }) {
+function Column(props) {
+    const { children } = props;
     return (
         <Layout {...props} direction="column">
             {children}

@@ -1,3 +1,54 @@
-.test {
-  background-color: #000;
+@import "fonts.scss";
+
+$black: #0a0b0a;
+$orange: #ff5100;
+$white: #fff;
+$grey: #8b9497;
+
+@mixin base-sizes() {
+  &__size {
+    &_l {
+      width: 127px;
+    }
+    &_s {
+      width: 83px;
+    }
+    &_full {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@mixin main-font($weight) {
+  font-family: "Montserrat", sans-serif;
+  font-weight: $weight;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+}
+ul,ol {
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+div {
+  &:focus {
+    outline: 0;
+  }
+}
+a {
+  text-decoration: none;
+  color: $black;
+  font-size: 16px;
+}
+body {
+  font-size: 13px;
+  @include main-font(500);
+  background-color: #F3F7FA;
+  padding: 0;
+  margin: 0;
 }

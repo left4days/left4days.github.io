@@ -304,6 +304,7 @@ module.exports = function(webpackEnv) {
             alias: {
                 widgets: path.resolve('./src/widgets'),
                 ui: path.resolve('./src/ui'),
+                statics: path.resolve('./src/statics'),
                 'react-native': 'react-native-web',
             },
             plugins: [
