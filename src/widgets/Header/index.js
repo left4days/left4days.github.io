@@ -7,7 +7,7 @@ import style from './style.scss';
 
 function Header() {
     return (
-        <Row className={style.header} jc="space-between">
+        <Row className={style.header} ai="center" jc="space-between">
             <img src={fireCudaLogo} alt="firecuda" />
             <img src={logo} alt="logo" />
             <HeaderAuth />

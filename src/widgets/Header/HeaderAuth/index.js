@@ -4,9 +4,11 @@ import { Row } from 'ui/Layout';
 
 function HeaderAuth() {
     return (
-        <Row>
-            <Button />
-            <Button />
+        <Row jc="flex-end">
+            <Button size="l" style="fill">
+                Регистрация
+            </Button>
+            <Button size="s">Вход</Button>
         </Row>
     );
 }
