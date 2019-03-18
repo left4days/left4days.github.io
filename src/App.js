@@ -11,6 +11,10 @@ class App extends Component {
         this.setState({ modal: type });
     };
 
+    handleModalClose = () => {
+        this.setState({ modal: null });
+    };
+
     render() {
         const { modal } = this.state;
 
@@ -23,7 +27,7 @@ class App extends Component {
                         return <Route key={path} path={path} exact={exact} component={component} />;
                     })}
                 </div>
-                <Modal modal={modal} />
+                <Modal modal={modal} onClose={this.handleModalClose} />
             </Router>
         );
     }
