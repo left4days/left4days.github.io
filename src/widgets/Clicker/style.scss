@@ -1,0 +1,49 @@
+$transitionHover: ease-in 20ms;
+$transitionActive: ease-in 150ms;
+
+.clicker {
+  width: 600px;
+  border: 1px solid $orange;
+  border-radius: 5px;
+  background: linear-gradient(rgba(255, 81, 0, 0.3), rgba(255, 81, 0, 0.1));
+  padding: 20px 30px;
+  &__title {
+    font-size: 18px;
+    @include main-font(600);
+    color: $white;
+    margin-bottom: 5px;
+  }
+  &__button {
+    background-color: #17120f;
+    height: 90px;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 5px;
+    border: 1px solid #2d190d;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    outline: 0;
+    &:active {
+      transition: $transitionActive;
+      border: 1px solid rgba(255, 81, 0, 0.3);
+    }
+    &:hover {
+      transition: $transitionHover;
+      background-color: #1d0e06;
+    }
+  }
+  &__count {
+    font-size: 55px;
+    @include main-font(600);
+    color: $white;
+  }
+  &__text {
+    font-size: 20px;
+    @include main-font(600);
+    color: $white;
+  }
+  &__img {
+    width: 33px;
+  }
+}

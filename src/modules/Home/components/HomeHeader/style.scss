@@ -1,0 +1,16 @@
+.home {
+  &__header {
+    height: 350px;
+    display: flex;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-image: url('../../../../statics/hero.png');
+      width: 515px;
+      height: 350px;
+    }
+  }
+}

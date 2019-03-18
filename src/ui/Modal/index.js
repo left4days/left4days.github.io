@@ -6,10 +6,21 @@ import { getModal } from './modals';
 
 import style from './style.scss';
 
-function Modal({ modal }) {
+function closeButton(onClose) {
+    return (
+        <button onClick={onClose} className={style.modal_close}>
+            x
+        </button>
+    );
+}
+
+function Modal({ modal, onClose }) {
     return (
         <div className={cx(style.modal, modal && style.modal_open)}>
-            <Column className={style.modal__inner}>{getModal(modal)}</Column>
+            <Column className={style.modal__inner}>
+                {getModal(modal)}
+                {closeButton(onClose)}
+            </Column>
         </div>
     );
 }
