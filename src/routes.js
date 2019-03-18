@@ -1,5 +1,6 @@
 import { Admin } from './modules/Admin';
 import { Home } from './modules/Home';
+import { AuthPage } from './modules/AuthPage';
 
 export default [
     {
@@ -10,5 +11,19 @@ export default [
     {
         path: '/admin',
         component: Admin,
+    },
+    {
+        path: '/auth',
+        component: AuthPage,
+        componentProps: {
+            authType: 'auth',
+        },
+    },
+    {
+        path: '/register',
+        component: AuthPage,
+        componentProps: {
+            authType: 'register',
+        },
     },
 ];
