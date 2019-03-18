@@ -1,0 +1,23 @@
+.title {
+  @include base-aligns();
+  @include base-margins();
+  &__container {
+    h1, h2 {
+      @include main-font(400);
+      letter-spacing: 1.2px;
+      color: $white;
+      text-transform: uppercase;
+    }
+  }
+  &__size {
+    &_l {
+      font-size: 48px;
+    }
+    &_m {
+      font-size: 36px;
+    }
+    &_s {
+      font-size:  18px;
+    }
+  }
+}

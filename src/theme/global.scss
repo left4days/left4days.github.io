@@ -5,6 +5,7 @@ $orange: #ff5100;
 $white: #fff;
 $grey: #8b9497;
 $bgDark: #1a1a1a;
+$brown: #484848;
 
 @mixin base-sizes() {
   &__size {
@@ -16,8 +17,26 @@ $bgDark: #1a1a1a;
     }
     &_full {
       width: 100%;
-      height: 100%;
+      height: 42px;
     }
+  }
+}
+
+@mixin placeholder-color($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+  }
+
+  &:-moz-placeholder {
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
   }
 }
 
@@ -46,6 +65,20 @@ $bgDark: #1a1a1a;
       &_x2 {
         margin-bottom: 20px;
       }
+    }
+  }
+}
+
+@mixin base-aligns() {
+  &__align {
+    &_left {
+      text-align: left;
+    }
+    &_center {
+      text-align: center;
+    }
+    &_right {
+      text-align: right;
     }
   }
 }
