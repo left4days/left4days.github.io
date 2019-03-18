@@ -8,13 +8,7 @@ function createRoutes(route) {
 
     const GETREQ = GET.map(function(route) {
         const [ url, callback ] = route;
-        console.log('-- add URL', url);
         router.get(url, callback);
-
-    });
-
-    router.get('/api/v1/user/:id', function (req, res) {
-        res.json({ success: true });
     });
 }
 

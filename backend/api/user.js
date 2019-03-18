@@ -1,9 +1,15 @@
-function checkIsUserExist(req, res, next) {
+const UserService = require('../services/UserService');
+
+const userService = new UserService();
+
+async function checkIsUserExist(req, res, next) {
     res.json({ success: true });
 }
 
-function getUserData(req, res, next) {
-    res.json({ nick: 'CocoMaster', registerType: 'TELEGRAM', clicks: 151 });
+async function getUserData(req, res, next) {
+    const { userId } = req.params;
+    const user = await userService.getUserById(userId);
+    res.json(user);
 }
 
 module.exports = {
