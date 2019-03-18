@@ -8,7 +8,7 @@ function HeaderAuth({ handleModal }) {
             <Button size="l" style="fill" margin="right_x2" onClick={() => handleModal('auth')}>
                 Регистрация
             </Button>
-            <Button size="s" onClick={() => handleModal('auth')}>
+            <Button size="s" onClick={() => handleModal('login')}>
                 Вход
             </Button>
         </Row>
