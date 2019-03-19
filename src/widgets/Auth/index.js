@@ -14,10 +14,12 @@ import { AuthSocial } from './AuthSocial';
 
 import style from './style.scss';
 
-function getUser() {
-    axios.get('/api/v1/user/123').then(res => {
+function loginUser(data) {
+    return axios.post('/api/v1/user/login', data);
+}
 
-    });
+function registerUser(data) {
+    return axios.post('/api/v1/user/', data);
 }
 
 function getTitle(authType) {
@@ -79,8 +81,17 @@ class Auth extends React.Component {
     };
 
     onSubmit = () => {
+        const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
-        getUser(model);
+        const actionPromise = authType === 'auth' ? registerUser(model) : loginUser(model);
+
+        actionPromise
+            .then(res => {
+                console.log('SUCCESS', authType, res);
+            })
+            .catch(error => {
+                console.log('FAIL', authType, error);
+            });
     };
 
     render() {
@@ -121,7 +132,7 @@ class Auth extends React.Component {
                     >
                         {getTitle(authType).button}
                     </Button>
-                    <BottomPanel authType={authType} getUser={getUser} />
+                    <BottomPanel authType={authType} />
                 </Formsy>
             </Column>
         );
