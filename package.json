@@ -33,6 +33,8 @@
     "eslint-plugin-react": "^7.12.4",
     "express": "^4.16.4",
     "file-loader": "2.0.0",
+    "firebase": "^5.9.0",
+    "firebase-admin": "^7.1.0",
     "formsy-react": "^1.1.5",
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-alpha.2",

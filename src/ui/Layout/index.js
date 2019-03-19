@@ -24,7 +24,7 @@ function Layout({ direction, jc, ai, noFlex, multiStr, hidden, disabled, classNa
 }
 
 Layout.displayName = 'Layout';
-Layout.PropTypes = {
+Layout.propTypes = {
     noFlex: PropTypes.bool,
     hidden: PropTypes.bool,
     multiStr: PropTypes.bool,

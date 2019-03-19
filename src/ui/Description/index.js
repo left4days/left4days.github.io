@@ -18,7 +18,7 @@ const Description = ({ children, align, className, margin }) => {
     );
 };
 
-Description.PropTypes = {
+Description.propTypes = {
     children: PropTypes.string,
     className: PropTypes.string,
     align: PropTypes.oneOf(['left', 'center', 'right']),

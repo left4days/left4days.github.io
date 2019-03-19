@@ -13,8 +13,8 @@ function AuthSocial() {
     return (
         <Row ai="center" jc="center" className={style.social__container}>
             {socialConfig.map((item, i) => (
-                <button className={style.social}>
-                    <img src={item} alt="social-icon" key={i} />
+                <button className={style.social} key={i}>
+                    <img src={item} alt="social-icon" />
                 </button>
             ))}
         </Row>
