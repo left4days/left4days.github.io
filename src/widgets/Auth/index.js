@@ -16,8 +16,7 @@ import style from './style.scss';
 
 function getUser() {
     axios.get('/api/v1/user/123').then(res => {
-        console.log(res);
-        alert(`USER: ${JSON.stringify(res.data)}`);
+
     });
 }
 
@@ -80,7 +79,8 @@ class Auth extends React.Component {
     };
 
     onSubmit = () => {
-        console.log(this.form.getModel());
+        const model = this.form.getModel();
+        getUser(model);
     };
 
     render() {

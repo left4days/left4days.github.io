@@ -2,6 +2,30 @@ const app = require('./server');
 const debug = require('debug')('geneticdiamond:server');
 const http = require('http');
 const port = normalizePort(process.env.PORT || '3001');
+const firebase = require('firebase-admin');
+
+const serviceAccount = require('./firebaseKey.json');
+
+firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount),
+    databaseURL: 'https://dragoneggteamepmire.firebaseio.com',
+});
+
+const db = firebase.database();
+
+const ref = db.ref('server/saving-data/fireblog');
+
+const usersRef = ref.child('users');
+usersRef.set({
+    alanisawesome: {
+        date_of_birth: 'June 23, 1912',
+        full_name: 'Alan Turing',
+    },
+    gracehop: {
+        date_of_birth: 'December 9, 1906',
+        full_name: 'Grace Hopper',
+    },
+});
 
 app.set('port', port);
 

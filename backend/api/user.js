@@ -8,13 +8,11 @@ async function checkIsUserExist(req, res, next) {
 
 async function getUserData(req, res, next) {
     const { userId } = req.params;
+    console.log('test', res);
     const user = await userService.getUserById(userId);
     res.json(user);
 }
 
 module.exports = {
-    GET: [
-        ['/api/v1/user/exist', checkIsUserExist],
-        ['/api/v1/user/:userId', getUserData]
-    ]
-}
+    GET: [['/api/v1/user/exist', checkIsUserExist], ['/api/v1/user/:userId', getUserData]],
+};

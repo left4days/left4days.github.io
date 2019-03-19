@@ -18,10 +18,10 @@ const Title = ({ size = 'm', children, align, tagName, extraCLass, containerClas
     );
 };
 
-Title.PropTypes = {
+Title.propTypes = {
     size: PropTypes.oneOf(['s', 'm', 'l']),
     align: PropTypes.oneOf(['left', 'center', 'right']),
-    margin: PropTypes.oneOf(['left', 'right', 'top', 'bottom', 'left_x2', 'right_x2', 'top_x2', 'bottom_x2']),
+    margin: PropTypes.oneOf(['left', 'right', 'top', 'bottom', 'left_x2', 'right_x2', 'top_x2', 'bottom_x2', false]),
     tagName: PropTypes.oneOf(['h1', 'h2']),
     color: PropTypes.oneOf(['white', 'orange']),
     extraCLass: PropTypes.string,
@@ -29,7 +29,7 @@ Title.PropTypes = {
 };
 
 Title.defaultProps = {
-    size: 'medium',
+    size: 's',
     align: 'left',
     tagName: 'h2',
     color: 'white',
