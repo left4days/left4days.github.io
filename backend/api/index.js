@@ -14,6 +14,10 @@ function createRoutes(route) {
 
 function applyRoutes(app) {
     createRoutes(userApi, router);
+    router.get('/api/*', (req, res, next) => {
+        res.json({ success: true, message: 'This api url is not declared' });
+    })
+
     app.use(router);
 }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
+import axios from 'axios';
+
 import { Input } from 'widgets/fields';
 import { Column } from 'ui/Layout';
 import { Button } from 'ui/Button';
@@ -12,6 +14,13 @@ import { AuthSocial } from './AuthSocial';
 
 import style from './style.scss';
 
+function getUser() {
+    axios.get('/api/v1/user/123').then(res => {
+        console.log(res);
+        alert(`USER: ${JSON.stringify(res.data)}`);
+    });
+}
+
 function getTitle(authType) {
     if (authType === 'auth') {
         return { title: 'Регистрация', button: 'Зарегистрироваться' };
@@ -19,7 +28,8 @@ function getTitle(authType) {
     return { title: 'Авторизация', button: 'Войти' };
 }
 
-function getBottomText(authType) {
+function BottomPanel(props) {
+    const { authType, getUser } = props;
     if (authType === 'auth') {
         return (
             <Description>
@@ -34,6 +44,7 @@ function getBottomText(authType) {
         <Row>
             <Button>Регистрация</Button>
             <Button>Забыли пароль?</Button>
+            <Button onClick={getUser}>Тест запроса</Button>
         </Row>
     );
 }
@@ -75,6 +86,7 @@ class Auth extends React.Component {
     render() {
         const { valid } = this.state;
         const { authType = 'auth' } = this.props;
+
         return (
             <Column>
                 <AuthHeader authType={authType} />
@@ -109,7 +121,7 @@ class Auth extends React.Component {
                     >
                         {getTitle(authType).button}
                     </Button>
-                    {getBottomText(authType)}
+                    <BottomPanel authType={authType} getUser={getUser} />
                 </Formsy>
             </Column>
         );
