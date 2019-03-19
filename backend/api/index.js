@@ -6,9 +6,14 @@ const userApi = require('./user');
 function createRoutes(route) {
     const { GET = [], POST = [], PUT = [], DELETE = [] } = route;
 
-    const GETREQ = GET.map(function(route) {
+    GET.forEach(function(route) {
         const [url, callback] = route;
         router.get(url, callback);
+    });
+
+    POST.forEach(function(route) {
+        const [url, callback] = route;
+        router.post(url, callback);
     });
 }
 
