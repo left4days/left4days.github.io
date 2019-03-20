@@ -15,11 +15,17 @@ import { AuthSocial } from './AuthSocial';
 import style from './style.scss';
 
 function loginUser(data) {
-    return axios.post('/api/v1/user/login', data);
+    return axios.post('/api/v1/user/login', data).then(function(res) {
+        console.log('test', res);
+    });
 }
 
 function registerUser(data) {
-    return axios.post('/api/v1/user/', data);
+    return axios.post('/api/v1/user/', data).then(function(res) {
+        console.log('resp', res).catch(function(error) {
+            console.log('error', error);
+        });
+    });
 }
 
 function getTitle(authType) {
