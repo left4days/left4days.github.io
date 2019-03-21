@@ -1,6 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
 import axios from 'axios';
+import firebase from 'firebase';
 
 import { Input } from 'widgets/fields';
 import { Column } from 'ui/Layout';
@@ -75,6 +76,16 @@ class Auth extends React.Component {
         valid: false,
         error: '',
     };
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log(user);
+            } else {
+                console.log('User NOT signed in!');
+            }
+        });
+    }
 
     formRef = ref => (this.form = ref);
 

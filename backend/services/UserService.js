@@ -10,10 +10,6 @@ class UserService {
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(function() {
-                console.log('email');
-                return { login, email };
-            })
             .catch(function(error) {
                 console.log('err');
                 const errorCode = error.code;
@@ -27,9 +23,6 @@ class UserService {
         firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then(function() {
-                return { login, email };
-            })
             .catch(function(error) {
                 // Handle Errors here.
                 const errorCode = error.code;
