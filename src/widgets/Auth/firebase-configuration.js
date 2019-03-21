@@ -11,7 +11,6 @@ export function registerUser(email, password) {
 }
 
 export function loginUser(email, password) {
-    console.log(email, password);
     firebase
         .auth()
         .signInWithEmailAndPassword(email, password)

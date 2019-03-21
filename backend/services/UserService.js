@@ -23,11 +23,7 @@ class UserService {
             .auth()
             .signInWithEmailAndPassword(email, password)
             .catch(function(error) {
-                console.log(error);
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
+                return error;
             });
     }
 
