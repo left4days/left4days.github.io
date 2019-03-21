@@ -8,7 +8,6 @@ async function checkIsUserExist(req, res, next) {
 
 async function getUserData(req, res, next) {
     const { userId } = req.params;
-    console.log('tests', res);
     const user = await userService.getUserById(userId);
 }
 
