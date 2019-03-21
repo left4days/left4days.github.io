@@ -29,12 +29,13 @@
   ],
   "login": [
     {
-      "type": "login",
-      "id": "login",
-      "name": "login",
-      "placeholder": "Логин",
-      "validations": "login",
-      "validationsError": "Недопустимый логин"
+      "type": "email",
+      "id": "email",
+      "name": "email",
+      "margin": "top_x2",
+      "placeholder": "Электронная почта",
+      "validations": "email",
+      "validationsError": "Недопустимый емейл"
     },
     {
       "type": "password",

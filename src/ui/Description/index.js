@@ -19,10 +19,10 @@ const Description = ({ children, align, className, margin }) => {
 };
 
 Description.propTypes = {
-    children: PropTypes.string,
+    children: PropTypes.node,
     className: PropTypes.string,
     align: PropTypes.oneOf(['left', 'center', 'right']),
-    margin: PropTypes.oneOf(['left', 'right', 'top', 'bottom', 'left_x2', 'right_x2', 'top_x2', 'bottom_x2']),
+    margin: PropTypes.oneOf(['left', 'right', 'top', 'bottom', 'left_x2', 'right_x2', 'top_x2', 'bottom_x2', false]),
 };
 
 Description.defaultProps = {

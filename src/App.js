@@ -17,7 +17,17 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null };
+    state = { modal: null, user: false };
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.setState({ user });
+            } else {
+                return 'not signed';
+            }
+        });
+    }
 
     handleModal = type => {
         this.setState({ modal: type });
@@ -28,11 +38,10 @@ class App extends Component {
     };
 
     render() {
-        const { modal } = this.state;
-
+        const { modal, user } = this.state;
         return (
             <Router>
-                <Header handleModal={this.handleModal} />
+                <Header handleModal={this.handleModal} user={user} />
                 <div className="App">
                     {routes.map(route => {
                         const { path, exact, component } = route;

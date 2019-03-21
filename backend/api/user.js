@@ -8,29 +8,17 @@ async function checkIsUserExist(req, res, next) {
 
 async function getUserData(req, res, next) {
     const { userId } = req.params;
-    console.log('test', res);
+    console.log('tests', res);
     const user = await userService.getUserById(userId);
-    res.json(user);
 }
 
-async function registerUser(req, res, next) {
-    const { id, errorMessage = 'user.create.failed' } = await userService.registerNewUser(req.body);
+async function registerUser(req) {
+    await userService.registerNewUser(req.body);
 
-    if (id) {
-        return res.json({ success: true });
-    }
-
-    res.status(403).json({ success: false, errorMessage });
 }
 
-async function loginUser(req, res, next) {
-    const { success, errorMessage = 'user.login.failed' } = await userService.loginUser(req.body);
-
-    if (success) {
-        return res.json({ success });
-    }
-
-    res.status(403).json({ success: false, errorMessage });
+async function loginUser(req) {
+    await userService.loginUser(req.body);
 }
 
 module.exports = {

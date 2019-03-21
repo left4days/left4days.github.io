@@ -12,28 +12,22 @@ import { Description } from 'ui/Description';
 import { getValidationForField } from './validations';
 import config from './config';
 import { AuthSocial } from './AuthSocial';
+import { loginUser, registerUser, signOutUser } from './firebase-configuration';
 
 import style from './style.scss';
-
-function loginUser(data) {
-    return axios.post('/api/v1/user/login', data).then(function(res) {
-        console.log('test', res);
-    });
-}
-
-function registerUser(data) {
-    return axios.post('/api/v1/user/', data).then(function(res) {
-        console.log('resp', res).catch(function(error) {
-            console.log('error', error);
-        });
-    });
-}
 
 function getTitle(authType) {
     if (authType === 'auth') {
         return { title: 'Регистрация', button: 'Зарегистрироваться' };
     }
     return { title: 'Авторизация', button: 'Войти' };
+}
+
+function getAuthAction(authType, email, password) {
+    if (authType === 'auth') {
+        return registerUser(email, password);
+    }
+    return loginUser(email, password);
 }
 
 function BottomPanel(props) {
@@ -77,16 +71,6 @@ class Auth extends React.Component {
         error: '',
     };
 
-    componentDidMount() {
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                console.log(user);
-            } else {
-                console.log('User NOT signed in!');
-            }
-        });
-    }
-
     formRef = ref => (this.form = ref);
 
     onValid = () => {
@@ -100,15 +84,8 @@ class Auth extends React.Component {
     onSubmit = () => {
         const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
-        const actionPromise = authType === 'auth' ? registerUser(model) : loginUser(model);
-
-        actionPromise
-            .then(res => {
-                console.log('SUCCESS', authType, res);
-            })
-            .catch(error => {
-                console.log('FAIL', authType, error);
-            });
+        const { email, password } = model;
+        getAuthAction(authType, email, password);
     };
 
     render() {
