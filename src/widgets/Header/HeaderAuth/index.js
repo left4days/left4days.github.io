@@ -1,8 +1,12 @@
 import React from 'react';
 import { Button } from 'ui/Button';
 import { Row } from 'ui/Layout';
+import { HeaderAuthAuthorized } from './AuthorizedHeader';
 
-function HeaderAuth({ handleModal }) {
+function HeaderAuth({ handleModal, user, signOutUser }) {
+    if (user) {
+        return <HeaderAuthAuthorized user={user} signOutUser={signOutUser} />;
+    }
     return (
         <Row jc="flex-end" ai="center">
             <Button size="l" style="fill" margin="right_x2" onClick={() => handleModal('auth')}>

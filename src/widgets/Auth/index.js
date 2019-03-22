@@ -1,6 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
 import axios from 'axios';
+import firebase from 'firebase';
 
 import { Input } from 'widgets/fields';
 import { Column } from 'ui/Layout';
@@ -11,22 +12,22 @@ import { Description } from 'ui/Description';
 import { getValidationForField } from './validations';
 import config from './config';
 import { AuthSocial } from './AuthSocial';
+import { loginUser, registerUser, signOutUser } from './firebase-configuration';
 
 import style from './style.scss';
-
-function loginUser(data) {
-    return axios.post('/api/v1/user/login', data);
-}
-
-function registerUser(data) {
-    return axios.post('/api/v1/user/', data);
-}
 
 function getTitle(authType) {
     if (authType === 'auth') {
         return { title: 'Регистрация', button: 'Зарегистрироваться' };
     }
     return { title: 'Авторизация', button: 'Войти' };
+}
+
+function getAuthAction(authType, email, password) {
+    if (authType === 'auth') {
+        return registerUser(email, password);
+    }
+    return loginUser(email, password);
 }
 
 function BottomPanel(props) {
@@ -83,15 +84,8 @@ class Auth extends React.Component {
     onSubmit = () => {
         const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
-        const actionPromise = authType === 'auth' ? registerUser(model) : loginUser(model);
-
-        actionPromise
-            .then(res => {
-                console.log('SUCCESS', authType, res);
-            })
-            .catch(error => {
-                console.log('FAIL', authType, error);
-            });
+        const { email, password } = model;
+        getAuthAction(authType, email, password);
     };
 
     render() {

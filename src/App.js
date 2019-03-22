@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import firebase from 'firebase';
 import { Header } from 'widgets/Header';
 import { Modal } from 'ui/Modal';
 import routes from './routes';
+import { signOutUser } from 'widgets/Auth/firebase-configuration';
+
+const config = {
+    apiKey: 'AIzaSyDDaaOyfmalL4ZzY1tlTneHbmdZ29tkxgc',
+    authDomain: 'dragoneggteamepmire.firebaseapp.com',
+    databaseURL: 'https://dragoneggteamepmire.firebaseio.com',
+    projectId: 'dragoneggteamepmire',
+    storageBucket: 'dragoneggteamepmire.appspot.com',
+    messagingSenderId: '201187011326',
+};
+
+firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null };
+    state = { modal: null, user: false };
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.setState({ user, modal: null });
+            } else {
+                return 'not signed';
+            }
+        });
+    }
 
     handleModal = type => {
         this.setState({ modal: type });
@@ -15,12 +38,16 @@ class App extends Component {
         this.setState({ modal: null });
     };
 
-    render() {
-        const { modal } = this.state;
+    signOutUserAction = () => {
+        signOutUser();
+        this.setState({ user: false });
+    };
 
+    render() {
+        const { modal, user } = this.state;
         return (
             <Router>
-                <Header handleModal={this.handleModal} />
+                <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
                 <div className="App">
                     {routes.map(route => {
                         const { path, exact, component } = route;

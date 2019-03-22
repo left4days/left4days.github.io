@@ -1,31 +1,42 @@
+const firebase = require('firebase');
+
 class UserService {
     async getUserById(id) {
-        console.log('here', id);
-        return { nick: 'CocoMaster', registerType: 'TELEGRAM', clicks: 151, id }
+        return { nick: 'CocoMaster', registerType: 'TELEGRAM', clicks: 151, id };
     }
 
     async registerNewUser(data) {
         const { login, email, password } = data;
-
-        if(login.length > 5) {
-            return { success: true };
-        }
-
-        if(id > 50) {
-            return { nick: 'CocoMaster', registerType: 'TELEGRAM', clicks: 151, id }
-        }
-
-        return { errorMessage: 'Too late, dude'}
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .catch(function(error) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                return { errorCode, errorMessage };
+            });
     }
 
     async loginUser(data) {
-        const { login, password } = data;
+        const { email, password, login } = data;
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .catch(function(error) {
+                return error;
+            });
+    }
 
-        if(login.length < 12) {
-            return { success: true };
-        }
-
-        return { errorMessage: 'Too late, dude'}
+    async signOut(data) {
+        firebase
+            .auth()
+            .signOut()
+            .then(function() {
+                // Sign-out successful.
+            })
+            .catch(function(error) {
+                // An error happened.
+            });
     }
 }
 
