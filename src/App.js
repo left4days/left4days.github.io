@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { Header } from 'widgets/Header';
 import { Modal } from 'ui/Modal';
 import routes from './routes';
+import { signOutUser } from 'widgets/Auth/firebase-configuration';
 
 const config = {
     apiKey: 'AIzaSyDDaaOyfmalL4ZzY1tlTneHbmdZ29tkxgc',
@@ -22,7 +23,7 @@ class App extends Component {
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                this.setState({ user });
+                this.setState({ user, modal: null });
             } else {
                 return 'not signed';
             }
@@ -37,11 +38,16 @@ class App extends Component {
         this.setState({ modal: null });
     };
 
+    signOutUserAction = () => {
+        signOutUser();
+        this.setState({ user: false });
+    };
+
     render() {
         const { modal, user } = this.state;
         return (
             <Router>
-                <Header handleModal={this.handleModal} user={user} />
+                <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
                 <div className="App">
                     {routes.map(route => {
                         const { path, exact, component } = route;

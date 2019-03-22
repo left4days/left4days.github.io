@@ -27,9 +27,9 @@ export function signOutUser() {
         .auth()
         .signOut()
         .then(function() {
-            // Sign-out successful.
+            console.log('success');
         })
         .catch(function(error) {
-            // An error happened.
+            console.log('error');
         });
 }

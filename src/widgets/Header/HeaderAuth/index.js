@@ -1,15 +1,11 @@
 import React from 'react';
 import { Button } from 'ui/Button';
 import { Row } from 'ui/Layout';
+import { HeaderAuthAuthorized } from './AuthorizedHeader';
 
-function HeaderAuthAuthorized({ user }) {
-    const { email } = user;
-    return <p>{email}</p>;
-}
-
-function HeaderAuth({ handleModal, user }) {
+function HeaderAuth({ handleModal, user, signOutUser }) {
     if (user) {
-        return <HeaderAuthAuthorized user={user} />;
+        return <HeaderAuthAuthorized user={user} signOutUser={signOutUser} />;
     }
     return (
         <Row jc="flex-end" ai="center">

@@ -5,7 +5,7 @@ import fireCudaLogo from 'statics/logo_firecuda.svg';
 import logo from 'statics/logo.svg';
 import style from './style.scss';
 
-function Header({ handleModal, user }) {
+function Header({ handleModal, user, signOutUser }) {
     return (
         <Column className={style.header} ai="center" jc="space-between">
             <Row className={style.header__container}>
@@ -15,7 +15,7 @@ function Header({ handleModal, user }) {
                 <Column>
                     <img className={style.header__logo} src={logo} alt="logo" />
                 </Column>
-                <HeaderAuth handleModal={handleModal} user={user} />
+                <HeaderAuth handleModal={handleModal} user={user} signOutUser={signOutUser} />
             </Row>
         </Column>
     );
