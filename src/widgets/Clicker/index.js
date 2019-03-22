@@ -1,6 +1,7 @@
 import React from 'react';
 import { Column, Row } from 'ui/Layout';
 import handIcon from 'statics/hand.svg';
+import axios from 'axios';
 import style from './style.scss';
 
 class Clicker extends React.Component {
@@ -8,7 +9,27 @@ class Clicker extends React.Component {
 
     handleClick = () => {
         const { count } = this.state;
-        this.setState({ count: count + 1 });
+        console.log('Clicked', count + 1);
+        this.setState({ count: count + 1 }, () => {
+            const authUser = Object.keys(window.localStorage).filter(item => item.startsWith('firebase:authUser'))[0];
+            console.log('USER', window);
+            axios
+                .post(
+                    '/api/v1/click',
+                    { count: count + 1 },
+                    {
+                        headers: {
+                            FIREBASE_AUTH_TOKEN: '123',
+                        },
+                    }
+                )
+                .then(res => {
+                    console.log('RES', res.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        });
     };
 
     render() {
