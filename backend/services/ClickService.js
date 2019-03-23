@@ -2,6 +2,20 @@ const firebaseAdmin = require('firebase-admin');
 const db = firebaseAdmin.database();
 const clicksRef = db.ref('server/saving-data/fireblog/clicks');
 
+function sortByClicks(a, b) {
+    const { clicks: aClicks } = a;
+    const { clicks: bClicks } = b;
+    if (aClicks > bClicks) {
+        return -1;
+    }
+
+    if (aClicks < bClicks) {
+        return 1;
+    }
+
+    return 0;
+}
+
 class ClickService {
     constructor() {
         this.clicks = 0;
@@ -50,6 +64,29 @@ class ClickService {
         }
 
         return { finalClicks };
+    }
+
+    async getTopClickers(limit) {
+        let res = [];
+        try {
+            await clicksRef.once('value', snapshot => {
+                res = Object.entries(snapshot.val())
+                    .map(([uid, clicks]) => {
+                        return {
+                            uid,
+                            clicks,
+                        };
+                    })
+                    .sort(sortByClicks);
+            });
+        } catch (err) {
+            console.log('ERROR DB GET TOP CLICKERS');
+            console.log(err);
+
+            return res;
+        }
+
+        return res;
     }
 }
 

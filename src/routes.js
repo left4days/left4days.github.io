@@ -1,4 +1,4 @@
-import { Admin } from './modules/Admin';
+import { AdminPanel } from './modules/Admin';
 import { Home } from './modules/Home';
 import { AuthPage } from './modules/AuthPage';
 
@@ -10,7 +10,7 @@ export default [
     },
     {
         path: '/admin',
-        component: Admin,
+        component: AdminPanel,
     },
     {
         path: '/auth',
