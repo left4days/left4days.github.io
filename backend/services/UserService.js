@@ -37,6 +37,14 @@ class UserService {
             console.log(err);
         }
     }
+
+    async getTopClickers(params) {
+        const { limit = 10 } = params;
+
+        const topClickers = await clickService.getTopClickers(limit);
+
+        return topClickers;
+    }
 }
 
 module.exports = UserService;
