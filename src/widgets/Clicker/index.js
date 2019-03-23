@@ -1,7 +1,11 @@
 import React from 'react';
-import { Column, Row } from 'ui/Layout';
-import handIcon from 'statics/hand.svg';
+import get from 'lodash/get';
 import axios from 'axios';
+
+import { Column, Row } from 'ui/Layout';
+import { isUserLogged, getFirebaseHeaderToken } from 'widgets/requestsHelpers';
+import handIcon from 'statics/hand.svg';
+
 import style from './style.scss';
 
 class Clicker extends React.Component {
@@ -9,26 +13,24 @@ class Clicker extends React.Component {
 
     handleClick = () => {
         const { count } = this.state;
-        console.log('Clicked', count + 1);
-        this.setState({ count: count + 1 }, () => {
-            const authUser = Object.keys(window.localStorage).filter(item => item.startsWith('firebase:authUser'))[0];
-            console.log('USER', window);
-            axios
-                .post(
-                    '/api/v1/click',
-                    { count: count + 1 },
-                    {
-                        headers: {
-                            FIREBASE_AUTH_TOKEN: '123',
-                        },
-                    }
-                )
-                .then(res => {
-                    console.log('RES', res.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+        this.setState({ count: count + 1 }, async () => {
+            const isLogged = await isUserLogged();
+            if (isLogged) {
+                const data = { count: count + 1 };
+                const options = await getFirebaseHeaderToken();
+                console.log('Options', options);
+
+                axios
+                    .post('/api/v1/click', data, options)
+                    .then(res => {
+                        console.log('RES', res.data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } else {
+                console.log('SIGN IN FOR WIN!');
+            }
         });
     };
 

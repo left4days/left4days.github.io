@@ -10,9 +10,8 @@ async function checkIsUserExist(req, res, next) {
 async function updateUserClicks(req, res, next) {
     const { body, user } = req;
     const { count = 0 } = body;
-    const { idToken = '123AAA' } = user;
-    console.log('updateUserClicks', user, count);
-    const result = await clickService.updateUserClicks(idToken, count);
+    const { user_id = '' } = user;
+    const result = await clickService.updateUserClicks(user_id, count);
 
     res.json({ success: true, data: result });
 }

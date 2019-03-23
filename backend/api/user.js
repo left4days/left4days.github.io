@@ -17,10 +17,6 @@ async function registerUser(req) {
     await userService.registerNewUser(req.body);
 }
 
-// async function loginUser(req) {
-//     await userService.loginUser(req.body);
-// }
-
 module.exports = {
     GET: [['/api/v1/user/exist', checkIsUserExist], ['/api/v1/user/:userId', getUserData]],
     POST: [['/api/v1/user', registerUser]],
