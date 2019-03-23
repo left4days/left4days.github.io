@@ -1,42 +1,41 @@
-const firebase = require('firebase');
+const firebaseAdmin = require('firebase-admin');
+const db = firebaseAdmin.database();
+const userRef = db.ref('server/saving-data/fireblog/users');
+
+const ClickService = require('../services/ClickService');
+
+const clickService = new ClickService();
 
 class UserService {
     async getUserById(id) {
-        return { nick: 'CocoMaster', registerType: 'TELEGRAM', clicks: 151, id };
+        let result = {};
+
+        await userRef.child(id).once('value', snap => {
+            result = snap.val();
+        });
+
+        const clicks = await clickService.getUserClicksById(id);
+
+        return {
+            ...result,
+            clicks,
+        };
     }
 
     async registerNewUser(data) {
-        const { login, email, password } = data;
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .catch(function(error) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                return { errorCode, errorMessage };
+        const { uid, login, registerBy } = data;
+        try {
+            await userRef.update({
+                [uid]: {
+                    role: 'user',
+                    registerBy,
+                    login,
+                },
             });
-    }
-
-    async loginUser(data) {
-        const { email, password, login } = data;
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .catch(function(error) {
-                return error;
-            });
-    }
-
-    async signOut(data) {
-        firebase
-            .auth()
-            .signOut()
-            .then(function() {
-                // Sign-out successful.
-            })
-            .catch(function(error) {
-                // An error happened.
-            });
+        } catch (err) {
+            console.log('ERROR DB UPDATE USER FOR', uid);
+            console.log(err);
+        }
     }
 }
 

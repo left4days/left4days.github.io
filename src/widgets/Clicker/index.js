@@ -1,6 +1,11 @@
 import React from 'react';
+import get from 'lodash/get';
+import axios from 'axios';
+
 import { Column, Row } from 'ui/Layout';
+import { isUserLogged, getFirebaseHeaderToken } from 'widgets/requestsHelpers';
 import handIcon from 'statics/hand.svg';
+
 import style from './style.scss';
 
 class Clicker extends React.Component {
@@ -8,7 +13,25 @@ class Clicker extends React.Component {
 
     handleClick = () => {
         const { count } = this.state;
-        this.setState({ count: count + 1 });
+        this.setState({ count: count + 1 }, async () => {
+            const isLogged = await isUserLogged();
+            if (isLogged) {
+                const data = { count: count + 1 };
+                const options = await getFirebaseHeaderToken();
+                console.log('Options', options);
+
+                axios
+                    .post('/api/v1/click', data, options)
+                    .then(res => {
+                        console.log('RES', res.data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } else {
+                console.log('SIGN IN FOR WIN!');
+            }
+        });
     };
 
     render() {

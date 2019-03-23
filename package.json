@@ -34,7 +34,7 @@
     "express": "^4.16.4",
     "file-loader": "2.0.0",
     "firebase": "^5.9.0",
-    "firebase-admin": "^7.1.0",
+    "firebase-admin": "^7.1.1",
     "firebase-tools": "^6.5.0",
     "formsy-react": "^1.1.5",
     "fs-extra": "7.0.1",
@@ -47,6 +47,7 @@
     "jest-resolve": "23.6.0",
     "jest-watch-typeahead": "^0.2.1",
     "lint-staged": "^8.1.5",
+    "lodash": "^4.17.11",
     "mini-css-extract-plugin": "0.5.0",
     "morgan": "^1.9.1",
     "node-sass": "^4.11.0",
@@ -89,7 +90,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "server": "node ./backend/index.js",
-    "server-dev": "nodemon ./backend/index.js"
+    "server-dev": "nodemon --inspect ./backend/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -23,9 +23,10 @@ function getTitle(authType) {
     return { title: 'Авторизация', button: 'Войти' };
 }
 
-function getAuthAction(authType, email, password) {
+function getAuthAction(authType, model) {
+    const { login, email, password } = model;
     if (authType === 'auth') {
-        return registerUser(email, password);
+        return registerUser(login, email, password, 'email');
     }
     return loginUser(email, password);
 }
@@ -85,7 +86,7 @@ class Auth extends React.Component {
         const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
         const { email, password } = model;
-        getAuthAction(authType, email, password);
+        getAuthAction(authType, model);
     };
 
     render() {
