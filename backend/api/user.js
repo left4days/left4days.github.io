@@ -13,8 +13,10 @@ async function getUserData(req, res, next) {
     res.json(user);
 }
 
-async function registerUser(req) {
-    await userService.registerNewUser(req.body);
+async function registerUser(req, res) {
+    const user = await userService.registerNewUser(req.body);
+
+    res.json({ success: true });
 }
 
 module.exports = {

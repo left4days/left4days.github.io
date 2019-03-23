@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import firebase from 'firebase';
+import axios from 'axios';
+import get from 'lodash/get';
+
 import { Header } from 'widgets/Header';
 import { Modal } from 'ui/Modal';
 import routes from './routes';
@@ -20,10 +23,14 @@ firebase.initializeApp(config);
 class App extends Component {
     state = { modal: null, user: false };
 
-    componentDidMount() {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.setState({ user, modal: null });
+    componentWillMount() {
+        firebase.auth().onAuthStateChanged(res => {
+            const uid = get(res, 'uid', '');
+            if (uid) {
+                axios.get(`/api/v1/user/${uid}`).then(resData => {
+                    const user = { ...res, userData: resData.data };
+                    this.setState({ user, modal: null });
+                });
             } else {
                 return 'not signed';
             }
