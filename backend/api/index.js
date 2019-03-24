@@ -4,6 +4,7 @@ const { auth } = require('firebase-admin');
 
 const userApi = require('./user');
 const clicksApi = require('./clicks');
+const appStateApi = require('./appState');
 
 const authService = auth();
 
@@ -24,6 +25,8 @@ function createRoutes(route) {
 function applyRoutes(app) {
     createRoutes(userApi, router);
     createRoutes(clicksApi, router);
+    createRoutes(appStateApi, router);
+
     router.get('/api/*', (req, res, next) => {
         res.json({ success: true, message: 'This api url is not declared' });
     });

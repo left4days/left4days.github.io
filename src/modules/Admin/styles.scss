@@ -9,11 +9,14 @@
   }
 
   &__table-header {
-    padding: 10px 40px;
+    padding: 10px 0 10px 40px;
     border-top: 1px solid #c4c4c4;
     border-bottom: 1px solid #c4c4c4;
 
-    p {
+    background: rgba(0, 0, 0, 0.4);
+    width: 555px;
+
+    p, div {
       font-size: 26px;
       font-weight: 500;
       color: white;
@@ -23,7 +26,6 @@
 
   &__top-clickers-wrap {
     padding: 0 40px;
-    width: auto;
   }
 
   &__table-row {
@@ -35,11 +37,15 @@
       border: none;
     }
 
-    p {
-      min-width: 120px;
+    p, div {
+      min-width: 150px;
       color: white;
       margin-right: 15px;
       font-size: 18px;
+    }
+
+    div {
+      min-width: 25px;
     }
   }
 
@@ -53,5 +59,19 @@
     border-radius: 0;
     font-weight: 300;
     margin-right: 20px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
   }
+}
+
+.admin-panel-go-away {
+  padding: 40px;
+  color: white;
+  font-size: 26px;
 }
