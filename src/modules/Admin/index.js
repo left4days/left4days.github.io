@@ -12,16 +12,15 @@ import { Row, Column } from 'ui/Layout';
 
 import './styles.scss';
 
-function SwitchActionStateButton({ state }) {
-    if (state === 'ACTIVE') {
-        return <Button>Закончить розыгрыш</Button>;
-    }
+function SwitchActionStateButton({ actionState, onClick }) {
+    const text = actionState === 'ACTIVE' ? 'Закончить розыгрыш' : 'Возобновить розыгрыш';
 
-    return <Button>Возобновить розыгрыш</Button>;
+    return <Button onClick={onClick}>{text}</Button>;
 }
 
 function UserRow({ user, idx = '№' }) {
     const { login = '-', clicks = 0, registerBy = '-' } = user;
+
     return (
         <Row className="admin-panel__table-row">
             <div>{idx}.</div>
@@ -40,21 +39,36 @@ class AdminPanel extends React.PureComponent {
             topClickers: [],
             winners: [],
             isUserAdmin: false,
+            actionState: 'ACTIVE',
         };
     }
 
     componentWillMount = () => {
         firebase.auth().onAuthStateChanged(res => {
-            const uid = get(res, 'uid', '');
-            if (uid) {
-                axios.get(`/api/v1/user/${uid}`).then(resData => {
-                    // if (get(resData, 'data.role') === 'admin') {
-                    return this.updateTop10();
-                    // }
-                });
-            } else {
-                return 'not signed';
-            }
+            this.getCurrentAppState();
+            this.getCurrentWinners();
+
+            return this.updateTop10();
+        });
+
+        firebase
+            .database()
+            .ref('/appState')
+            .on('value', snapshot => {
+                console.log('changed', snapshot.val());
+            });
+    };
+
+    getCurrentWinners = async () => {
+        const options = await getFirebaseHeaderToken();
+        axios.get('/api/v1/user/winners/30', options).then(res => {
+            this.setState({ winners: res.data.data, isUserAdmin: true });
+        });
+    };
+
+    getCurrentAppState = async () => {
+        axios.get('/api/v1/appState/state').then(res => {
+            this.setState({ actionState: res.data.data });
         });
     };
 
@@ -67,9 +81,16 @@ class AdminPanel extends React.PureComponent {
 
     determineWinners = async () => {
         const options = await getFirebaseHeaderToken();
-        axios.get('/api/v1/user/winners/30', options).then(res => {
+        axios.get('/api/v1/user/winners/create/30', options).then(res => {
             this.setState({ winners: res.data.data });
         });
+    };
+
+    switchAppState = async currentState => {
+        const { actionState } = this.state;
+        const options = await getFirebaseHeaderToken();
+        const data = { currentState: actionState };
+        axios.post('/api/v1/appState/switchState', data, options).then(res => {});
     };
 
     renderWinnerList = () => {
@@ -82,7 +103,7 @@ class AdminPanel extends React.PureComponent {
                     <Button onClick={this.determineWinners}>Определить</Button>
                 </Row>
                 <Column ai="flex-start" className="admin-panel__top-clickers-wrap">
-                    <UserRow user={{ login: 'LOGIN', registerBy: 'REGISTERED BY', clicks: 'CLICKS' }} />
+                    <UserRow user={{ login: 'LOGIN', registerBy: 'REGISTERED BY', email: 'EMAIL', clicks: 'CLICKS' }} />
                     {winners.map((user, i) => (
                         <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
                     ))}
@@ -111,9 +132,8 @@ class AdminPanel extends React.PureComponent {
     };
 
     render() {
-        const { className, actionState = {} } = this.props;
-        const { isUserAdmin } = this.state;
-        const { state = 'ACTIVE' } = actionState;
+        const { className } = this.props;
+        const { isUserAdmin, actionState } = this.state;
 
         if (!isUserAdmin) {
             return <div className="admin-panel-go-away">You have no permissions to see this page</div>;
@@ -122,7 +142,7 @@ class AdminPanel extends React.PureComponent {
         return (
             <Column className={cx('admin-panel', className)}>
                 <Row className="admin-panel__buttons">
-                    <SwitchActionStateButton state={state} />
+                    <SwitchActionStateButton actionState={actionState} onClick={this.switchAppState} />
                     <Button>Выгрузить полный список участников</Button>
                 </Row>
                 <Row>

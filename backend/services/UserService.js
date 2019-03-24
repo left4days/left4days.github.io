@@ -1,6 +1,8 @@
 const firebaseAdmin = require('firebase-admin');
+const get = require('lodash/get');
 const db = firebaseAdmin.database();
 const userRef = db.ref('server/saving-data/fireblog/users');
+const appStateRef = db.ref('server/saving-data/fireblog/appState');
 
 const ClickService = require('../services/ClickService');
 
@@ -73,7 +75,7 @@ class UserService {
         return await Promise.all(topClickers.map(({ uid }) => this.getUserById(uid)));
     }
 
-    async getWinners(params) {
+    async generateWinners(params) {
         const { limit = 30 } = params;
 
         let participants = [];
@@ -99,7 +101,34 @@ class UserService {
             winners.push(participants[idx]);
         }
 
+        try {
+            await appStateRef.update({
+                winnerList: winners,
+            });
+        } catch (err) {
+            console.log('ERROR DB UPDATE WINNERS LIST', winners);
+            console.log(err);
+        }
+
         return await Promise.all(winners.map(uid => this.getUserById(uid)));
+    }
+
+    async getWinners(params) {
+        const { limit = 30 } = params;
+        let winnerList = [];
+
+        try {
+            await appStateRef.once('value', snapshot => {
+                winnerList = get(snapshot.val(), 'winnerList', []);
+            });
+        } catch (err) {
+            console.log('ERROR DB GET WINNERS');
+            console.log(err);
+
+            return [];
+        }
+
+        return await Promise.all(winnerList.map(uid => this.getUserById(uid)));
     }
 }
 
