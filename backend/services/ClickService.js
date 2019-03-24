@@ -77,13 +77,14 @@ class ClickService {
                             clicks,
                         };
                     })
-                    .sort(sortByClicks);
+                    .sort(sortByClicks)
+                    .slice(0, limit + 1);
             });
         } catch (err) {
             console.log('ERROR DB GET TOP CLICKERS');
             console.log(err);
 
-            return res;
+            return [];
         }
 
         return res;

@@ -25,11 +25,18 @@ async function getTopClickers(req, res) {
     res.json({ success: true, data: users });
 }
 
+async function getWinners(req, res) {
+    const users = await userService.getWinners(req.params);
+
+    res.json({ success: true, data: users });
+}
+
 module.exports = {
     GET: [
         ['/api/v1/user/exist', checkIsUserExist],
         ['/api/v1/user/:userId', getUserData],
         ['/api/v1/user/top/:limit', getTopClickers],
+        ['/api/v1/user/winners/:limit', getWinners],
     ],
     POST: [['/api/v1/user', registerUser]],
 };
