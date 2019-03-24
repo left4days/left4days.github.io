@@ -1,4 +1,5 @@
 const UserService = require('../services/UserService');
+const { requiresAdmin, requiresAuth } = require('./middleware');
 
 const userService = new UserService();
 
@@ -35,8 +36,8 @@ module.exports = {
     GET: [
         ['/api/v1/user/exist', checkIsUserExist],
         ['/api/v1/user/:userId', getUserData],
-        ['/api/v1/user/top/:limit', getTopClickers],
-        ['/api/v1/user/winners/:limit', getWinners],
+        ['/api/v1/user/top/:limit', requiresAdmin, getTopClickers],
+        ['/api/v1/user/winners/:limit', requiresAdmin, getWinners],
     ],
     POST: [['/api/v1/user', registerUser]],
 };

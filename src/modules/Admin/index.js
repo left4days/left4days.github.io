@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import axios from 'axios';
+import get from 'lodash/get';
+import firebase from 'firebase';
+
+import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
 
 import { Button } from 'ui/Button';
 import { Row, Column } from 'ui/Layout';
@@ -35,21 +39,35 @@ class AdminPanel extends React.PureComponent {
         this.state = {
             topClickers: [],
             winners: [],
+            isUserAdmin: false,
         };
     }
 
     componentWillMount = () => {
-        this.updateTop10();
-    };
-
-    updateTop10 = () => {
-        axios.get('/api/v1/user/top/10').then(res => {
-            this.setState({ topClickers: res.data.data });
+        firebase.auth().onAuthStateChanged(res => {
+            const uid = get(res, 'uid', '');
+            if (uid) {
+                axios.get(`/api/v1/user/${uid}`).then(resData => {
+                    // if (get(resData, 'data.role') === 'admin') {
+                    return this.updateTop10();
+                    // }
+                });
+            } else {
+                return 'not signed';
+            }
         });
     };
 
-    determineWinners = () => {
-        axios.get('/api/v1/user/winners/30').then(res => {
+    updateTop10 = async () => {
+        const options = await getFirebaseHeaderToken();
+        axios.get('/api/v1/user/top/10', options).then(res => {
+            this.setState({ topClickers: res.data.data, isUserAdmin: true });
+        });
+    };
+
+    determineWinners = async () => {
+        const options = await getFirebaseHeaderToken();
+        axios.get('/api/v1/user/winners/30', options).then(res => {
             this.setState({ winners: res.data.data });
         });
     };
@@ -74,7 +92,7 @@ class AdminPanel extends React.PureComponent {
     };
 
     renderTop10List = () => {
-        const { topClickers } = this.state;
+        const { topClickers, isUserAdmin } = this.state;
 
         return (
             <Column>
@@ -94,7 +112,12 @@ class AdminPanel extends React.PureComponent {
 
     render() {
         const { className, actionState = {} } = this.props;
+        const { isUserAdmin } = this.state;
         const { state = 'ACTIVE' } = actionState;
+
+        if (!isUserAdmin) {
+            return <div className="admin-panel-go-away">You have no permissions to see this page</div>;
+        }
 
         return (
             <Column className={cx('admin-panel', className)}>

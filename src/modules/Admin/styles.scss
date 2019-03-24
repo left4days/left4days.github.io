@@ -59,5 +59,19 @@
     border-radius: 0;
     font-weight: 300;
     margin-right: 20px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
   }
+}
+
+.admin-panel-go-away {
+  padding: 40px;
+  color: white;
+  font-size: 26px;
 }
