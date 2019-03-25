@@ -27,7 +27,7 @@ export function maxLength(value, number) {
 }
 
 Formsy.addValidationRule('isLogin', function(values, value) {
-    return onlyLettersAndNumbers(value) && minLength(value, 8) && maxLength(value, 16);
+    return onlyLettersAndNumbers(value) && minLength(value, 4) && maxLength(value, 16);
 });
 
 Formsy.addValidationRule('isPassword', function(values, value) {

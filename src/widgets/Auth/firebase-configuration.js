@@ -10,7 +10,7 @@ export function registerUser(login, email, password, registerBy) {
         .then(async res => {
             const { user = {} } = res || {};
             const uid = get(res, 'user.uid', '');
-            const data = { login, registerBy, uid };
+            const data = { login, registerBy, uid, email };
 
             const options = await getFirebaseHeaderToken();
 

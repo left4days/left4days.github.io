@@ -7,6 +7,7 @@ import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
 import { Button } from 'ui/Button';
 import { Title } from 'ui/Title';
 import { Row, Column } from 'ui/Layout';
+import { Loader } from 'ui/Loader';
 import { UserRow } from './UserRow';
 import { UserHeading } from './UserHeading';
 
@@ -16,6 +17,20 @@ function SwitchActionStateButton({ actionState, onClick }) {
     const text = actionState === 'ACTIVE' ? 'Закончить розыгрыш' : 'Возобновить розыгрыш';
 
     return <Button onClick={onClick}>{text}</Button>;
+}
+
+function Table({ text, onClick, buttonText, data }) {
+    return (
+        <Column>
+            <UserHeading text={text} onClick={onClick} buttonText={buttonText} />
+            <Column ai="flex-start">
+                <UserRow user={{ login: 'LOGIN', email: 'EMAIL', registerBy: 'REGISTERED BY', clicks: 'CLICKS' }} />
+                {data.map((user, i) => (
+                    <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
+                ))}
+            </Column>
+        </Column>
+    );
 }
 
 class AdminPanel extends React.PureComponent {
@@ -31,7 +46,7 @@ class AdminPanel extends React.PureComponent {
     }
 
     componentWillMount = () => {
-        firebase.auth().onAuthStateChanged(res => {
+        firebase.auth().onAuthStateChanged(() => {
             this.getCurrentAppState();
             this.getCurrentWinners();
 
@@ -80,40 +95,8 @@ class AdminPanel extends React.PureComponent {
         axios.post('/api/v1/appState/switchState', data, options).then(res => {});
     };
 
-    renderWinnerList = () => {
-        const { winners } = this.state;
-
-        return (
-            <Column>
-                <UserHeading text="30 победителей:" onClick={this.determineWinners} buttonText="Определить" />
-                <Column ai="flex-start">
-                    <UserRow user={{ login: 'LOGIN', registerBy: 'REGISTERED BY', email: 'EMAIL', clicks: 'CLICKS' }} />
-                    {winners.map((user, i) => (
-                        <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
-                    ))}
-                </Column>
-            </Column>
-        );
-    };
-
-    renderTop10List = () => {
-        const { topClickers } = this.state;
-
-        return (
-            <Column>
-                <UserHeading text="Топ-10 кликеров:" onClick={this.updateTop10} buttonText="Обновить" />
-                <Column ai="flex-start">
-                    <UserRow user={{ login: 'LOGIN', registerBy: 'REGISTERED BY', clicks: 'CLICKS' }} />
-                    {topClickers.map((user, i) => (
-                        <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
-                    ))}
-                </Column>
-            </Column>
-        );
-    };
-
     render() {
-        const { isUserAdmin, actionState } = this.state;
+        const { isUserAdmin, actionState, winners, topClickers } = this.state;
 
         if (!isUserAdmin) {
             return <Title containerClassName={style.admin__rejected}>You have no permissions to see this page</Title>;
@@ -128,8 +111,18 @@ class AdminPanel extends React.PureComponent {
                     </Button>
                 </Row>
                 <Column>
-                    {this.renderWinnerList()}
-                    {this.renderTop10List()}
+                    <Table
+                        text="30 победителей"
+                        onClick={this.determineWinners}
+                        buttonText="Определить"
+                        data={winners}
+                    />
+                    <Table
+                        text="Топ-10 кликеров:"
+                        onClick={this.updateTop10}
+                        buttonText="Обновить"
+                        data={topClickers}
+                    />
                 </Column>
             </Column>
         );
