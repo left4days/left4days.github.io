@@ -10,7 +10,7 @@ export function registerUser(login, email, password, registerBy) {
         .then(async res => {
             const { user = {} } = res || {};
             const uid = get(res, 'user.uid', '');
-            const data = { login, registerBy, uid };
+            const data = { login, registerBy, uid, email };
 
             const options = await getFirebaseHeaderToken();
 
@@ -42,5 +42,17 @@ export function signOutUser() {
         })
         .catch(function(error) {
             console.log('error');
+        });
+}
+
+export function resetUser(email) {
+    firebase
+        .auth()
+        .sendPasswordResetEmail(email)
+        .then(function() {
+            console.log('email sends');
+        })
+        .catch(function(error) {
+            console.log(error);
         });
 }

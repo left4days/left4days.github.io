@@ -1,8 +1,5 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import axios from 'axios';
-import firebase from 'firebase';
-
 import { Input } from 'widgets/fields';
 import { Column } from 'ui/Layout';
 import { Button } from 'ui/Button';
@@ -12,46 +9,54 @@ import { Description } from 'ui/Description';
 import { getValidationForField } from './validations';
 import config from './config';
 import { AuthSocial } from './AuthSocial';
-import { loginUser, registerUser, signOutUser } from './firebase-configuration';
+import { getAuthAction } from './helpers';
 
 import style from './style.scss';
 
 function getTitle(authType) {
-    if (authType === 'auth') {
-        return { title: 'Регистрация', button: 'Зарегистрироваться' };
+    switch (authType) {
+        case 'auth':
+        default:
+            return { title: 'Регистрация', button: 'Зарегистрироваться' };
+        case 'login':
+            return { title: 'Авторизация', button: 'Войти' };
+        case 'reset':
+            return { title: 'Восстановить пароль', button: 'Восстановить' };
     }
-    return { title: 'Авторизация', button: 'Войти' };
-}
-
-function getAuthAction(authType, model) {
-    const { login, email, password } = model;
-    if (authType === 'auth') {
-        return registerUser(login, email, password, 'email');
-    }
-    return loginUser(email, password);
 }
 
 function BottomPanel(props) {
-    const { authType, getUser } = props;
-    if (authType === 'auth') {
-        return (
-            <Description>
-                Нажимая на кнопку Зарегистрироваться, вы подтверждаете свое согласие с
-                <a href="#" className={style.auth__link}>
-                    Условиями предоставления услуг
-                </a>
-            </Description>
-        );
+    const { authType, handleModal } = props;
+    switch (authType) {
+        case 'auth':
+            return (
+                <Description>
+                    Нажимая на кнопку Зарегистрироваться, вы подтверждаете свое согласие с
+                    <a href="#" className={style.auth__link}>
+                        Условиями предоставления услуг
+                    </a>
+                </Description>
+            );
+        case 'login':
+            return (
+                <Row>
+                    <Button className={style.auth__button_more} onClick={() => handleModal('auth')}>
+                        Регистрация
+                    </Button>
+                    <Button className={style.auth__button_more} onClick={() => handleModal('reset')}>
+                        Забыли пароль?
+                    </Button>
+                </Row>
+            );
+        case 'reset':
+        default:
+            return null;
     }
-    return (
-        <Row>
-            <Button>Регистрация</Button>
-            <Button>Забыли пароль?</Button>
-            <Button onClick={getUser}>Тест запроса</Button>
-        </Row>
-    );
 }
 function AuthHeader({ authType }) {
+    if (authType === 'reset') {
+        return <Title align="center">{getTitle(authType).title}</Title>;
+    }
     return (
         <Column>
             <Title align="center">{getTitle(authType).title}</Title>
@@ -85,13 +90,12 @@ class Auth extends React.Component {
     onSubmit = () => {
         const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
-        const { email, password } = model;
         getAuthAction(authType, model);
     };
 
     render() {
         const { valid } = this.state;
-        const { authType = 'auth' } = this.props;
+        const { authType = 'auth', handleModal } = this.props;
 
         return (
             <Column>
@@ -127,7 +131,7 @@ class Auth extends React.Component {
                     >
                         {getTitle(authType).button}
                     </Button>
-                    <BottomPanel authType={authType} />
+                    <BottomPanel authType={authType} handleModal={handleModal} />
                 </Formsy>
             </Column>
         );

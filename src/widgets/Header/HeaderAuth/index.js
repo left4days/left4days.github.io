@@ -1,9 +1,17 @@
 import React from 'react';
 import { Button } from 'ui/Button';
 import { Row } from 'ui/Layout';
+import { Loader } from 'ui/Loader';
 import { HeaderAuthAuthorized } from './AuthorizedHeader';
 
 function HeaderAuth({ handleModal, user, signOutUser }) {
+    if (user === 'loading') {
+        return (
+            <Row jc="flex-end" ai="center">
+                <Loader />
+            </Row>
+        );
+    }
     if (user) {
         return <HeaderAuthAuthorized user={user} signOutUser={signOutUser} />;
     }

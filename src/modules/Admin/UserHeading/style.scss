@@ -1,0 +1,7 @@
+.admin {
+  &__heading {
+    @include container-size();
+    padding: 20px 0;
+    color: $white;
+  }
+}

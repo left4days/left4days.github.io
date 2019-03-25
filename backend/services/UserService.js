@@ -40,6 +40,7 @@ class UserService {
         let result = {};
 
         await userRef.child(uid).once('value', snap => {
+            console.log('tests', snap.val());
             result = snap.val();
         });
 
@@ -53,12 +54,13 @@ class UserService {
     }
 
     async registerNewUser(data) {
-        const { uid, login, registerBy } = data;
+        const { uid, login, registerBy, email } = data;
         try {
             await userRef.update({
                 [uid]: {
                     role: 'user',
                     registerBy,
+                    email,
                     login,
                 },
             });

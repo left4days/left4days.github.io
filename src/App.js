@@ -21,7 +21,7 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null, user: false };
+    state = { modal: null, user: 'loading' };
 
     componentWillMount() {
         firebase.auth().onAuthStateChanged(res => {
@@ -32,7 +32,7 @@ class App extends Component {
                     this.setState({ user, modal: null });
                 });
             } else {
-                return 'not signed';
+                this.setState({ user: false });
             }
         });
     }
@@ -61,7 +61,7 @@ class App extends Component {
                         return <Route key={path} path={path} exact={exact} component={component} />;
                     })}
                 </div>
-                <Modal modal={modal} onClose={this.handleModalClose} />
+                <Modal modal={modal} handleModal={this.handleModal} onClose={this.handleModalClose} />
             </Router>
         );
     }

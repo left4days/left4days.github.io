@@ -46,5 +46,16 @@
       "validations": "password",
       "validationsError": "Недопустимый пароль"
     }
+  ],
+  "reset": [
+    {
+      "type": "email",
+      "id": "email",
+      "name": "email",
+      "margin": "top_x2",
+      "placeholder": "Электронная почта",
+      "validations": "email",
+      "validationsError": "Недопустимый емейл"
+    }
   ]
 }

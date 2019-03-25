@@ -1,0 +1,18 @@
+.admin {
+  @include container-size();
+
+  &__rejected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  &__header {
+    padding: 40px 0;
+  }
+
+  .ux-button {
+    width: auto;
+  }
+}

@@ -94,7 +94,7 @@
     "server": "node ./backend/index.js",
     "server-dev": "nodemon --inspect ./backend/index.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -b master -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

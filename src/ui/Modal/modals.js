@@ -1,15 +1,15 @@
 import React from 'react';
 import { Auth } from 'widgets/Auth';
 
-const MODALS = {
-    auth: <Auth authType="auth" />,
-    login: <Auth authType="login" />,
-    default: null,
-};
-
-export function getModal(type) {
-    if (MODALS.hasOwnProperty(type)) {
-        return MODALS[type];
+export function getModal(type, handleModal) {
+    switch (type) {
+        case 'auth':
+            return <Auth authType="auth" handleModal={handleModal} />;
+        case 'login':
+            return <Auth authType="login" handleModal={handleModal} />;
+        case 'reset':
+            return <Auth authType="reset" handleModal={handleModal} />;
+        default:
+            return null;
     }
-    return MODALS.default;
 }
