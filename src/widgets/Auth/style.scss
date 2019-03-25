@@ -51,5 +51,17 @@
   }
   &__button {
     margin-top: 20px;
+    &_more {
+      text-decoration: underline;
+      color: $brown;
+      background-color: transparent;
+      text-transform: none;
+      width: auto;
+      &:hover {
+        background-color: transparent;
+        color: $white;
+        transition: .1s;
+      }
+    }
   }
 }

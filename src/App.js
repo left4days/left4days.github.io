@@ -61,7 +61,7 @@ class App extends Component {
                         return <Route key={path} path={path} exact={exact} component={component} />;
                     })}
                 </div>
-                <Modal modal={modal} onClose={this.handleModalClose} />
+                <Modal modal={modal} handleModal={this.handleModal} onClose={this.handleModalClose} />
             </Router>
         );
     }

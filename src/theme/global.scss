@@ -118,5 +118,10 @@ body {
   @include main-font(500);
   background-color: #13023c;
   padding: 0;
+  box-sizing: border-box;
   margin: 0;
+
+  > * {
+    box-sizing: border-box;
+  }
 }

@@ -44,3 +44,15 @@ export function signOutUser() {
             console.log('error');
         });
 }
+
+export function resetUser(email) {
+    firebase
+        .auth()
+        .sendPasswordResetEmail(email)
+        .then(function() {
+            console.log('email sends');
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+}

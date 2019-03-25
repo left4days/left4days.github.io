@@ -14,11 +14,11 @@ function closeButton(onClose) {
     );
 }
 
-function Modal({ modal, onClose }) {
+function Modal({ modal, handleModal, onClose }) {
     return (
         <div className={cx(style.modal, modal && style.modal_open)}>
             <Column className={style.modal__inner}>
-                {getModal(modal)}
+                {getModal(modal, handleModal)}
                 {closeButton(onClose)}
             </Column>
         </div>

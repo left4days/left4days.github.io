@@ -1,34 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import axios from 'axios';
-import get from 'lodash/get';
 import firebase from 'firebase';
 
 import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
-
 import { Button } from 'ui/Button';
+import { Title } from 'ui/Title';
 import { Row, Column } from 'ui/Layout';
+import { UserRow } from './UserRow';
+import { UserHeading } from './UserHeading';
 
-import './styles.scss';
+import style from './style.scss';
 
 function SwitchActionStateButton({ actionState, onClick }) {
     const text = actionState === 'ACTIVE' ? 'Закончить розыгрыш' : 'Возобновить розыгрыш';
 
     return <Button onClick={onClick}>{text}</Button>;
-}
-
-function UserRow({ user, idx = '№' }) {
-    const { login = '-', clicks = 0, registerBy = '-' } = user;
-
-    return (
-        <Row className="admin-panel__table-row">
-            <div>{idx}.</div>
-            <p>{login}</p>
-            <p>{registerBy}</p>
-            <p>{clicks}</p>
-        </Row>
-    );
 }
 
 class AdminPanel extends React.PureComponent {
@@ -98,11 +85,8 @@ class AdminPanel extends React.PureComponent {
 
         return (
             <Column>
-                <Row ai="center" jc="space-between" className="admin-panel__table-header">
-                    <p>30 победителей:</p>
-                    <Button onClick={this.determineWinners}>Определить</Button>
-                </Row>
-                <Column ai="flex-start" className="admin-panel__top-clickers-wrap">
+                <UserHeading text="30 победителей:" onClick={this.determineWinners} buttonText="Определить" />
+                <Column ai="flex-start">
                     <UserRow user={{ login: 'LOGIN', registerBy: 'REGISTERED BY', email: 'EMAIL', clicks: 'CLICKS' }} />
                     {winners.map((user, i) => (
                         <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
@@ -113,15 +97,12 @@ class AdminPanel extends React.PureComponent {
     };
 
     renderTop10List = () => {
-        const { topClickers, isUserAdmin } = this.state;
+        const { topClickers } = this.state;
 
         return (
             <Column>
-                <Row ai="center" jc="space-between" className="admin-panel__table-header">
-                    <p>Топ-10 кликеров:</p>
-                    <Button onClick={this.updateTop10}>Обновить</Button>
-                </Row>
-                <Column ai="flex-start" className="admin-panel__top-clickers-wrap">
+                <UserHeading text="Топ-10 кликеров:" onClick={this.updateTop10} buttonText="Обновить" />
+                <Column ai="flex-start">
                     <UserRow user={{ login: 'LOGIN', registerBy: 'REGISTERED BY', clicks: 'CLICKS' }} />
                     {topClickers.map((user, i) => (
                         <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
@@ -132,23 +113,24 @@ class AdminPanel extends React.PureComponent {
     };
 
     render() {
-        const { className } = this.props;
         const { isUserAdmin, actionState } = this.state;
 
         if (!isUserAdmin) {
-            return <div className="admin-panel-go-away">You have no permissions to see this page</div>;
+            return <Title containerClassName={style.admin__rejected}>You have no permissions to see this page</Title>;
         }
 
         return (
-            <Column className={cx('admin-panel', className)}>
-                <Row className="admin-panel__buttons">
+            <Column className={style.admin}>
+                <Row className={style.admin__header}>
                     <SwitchActionStateButton actionState={actionState} onClick={this.switchAppState} />
-                    <Button>Выгрузить полный список участников</Button>
+                    <Button style="void" margin="left">
+                        Выгрузить полный список участников
+                    </Button>
                 </Row>
-                <Row>
+                <Column>
                     {this.renderWinnerList()}
                     {this.renderTop10List()}
-                </Row>
+                </Column>
             </Column>
         );
     }
