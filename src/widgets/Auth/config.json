@@ -6,7 +6,7 @@
       "name": "login",
       "placeholder": "Логин",
       "validations": "login",
-      "validationsError": "Недопустимый логин"
+      "validationsError": "Логин должен содержать от 4 до 8 латинских букв"
     },
     {
       "type": "email",
@@ -15,7 +15,7 @@
       "margin": "top_x2",
       "placeholder": "Электронная почта",
       "validations": "email",
-      "validationsError": "Недопустимый емейл"
+      "validationsError": "Формат Email не верен"
     },
     {
       "type": "password",
@@ -24,7 +24,7 @@
       "margin": "top_x2",
       "placeholder": "Пароль",
       "validations": "password",
-      "validationsError": "Недопустимый пароль"
+      "validationsError": "Пароль должен содержать минимум одну цифру и букву"
     }
   ],
   "login": [
@@ -35,7 +35,7 @@
       "margin": "top_x2",
       "placeholder": "Электронная почта",
       "validations": "email",
-      "validationsError": "Недопустимый емейл"
+      "validationsError": ""
     },
     {
       "type": "password",
@@ -44,7 +44,7 @@
       "margin": "top_x2",
       "placeholder": "Пароль",
       "validations": "password",
-      "validationsError": "Недопустимый пароль"
+      "validationsError": ""
     }
   ],
   "reset": [
@@ -55,7 +55,7 @@
       "margin": "top_x2",
       "placeholder": "Электронная почта",
       "validations": "email",
-      "validationsError": "Недопустимый емейл"
+      "validationsError": "Формат Email не верен"
     }
   ]
 }

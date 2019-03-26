@@ -10,8 +10,12 @@ import { getValidationForField } from './validations';
 import config from './config';
 import { AuthSocial } from './AuthSocial';
 import { getAuthAction } from './helpers';
+import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
+import { getValidationError } from './validations-errors';
 
 import style from './style.scss';
+import get from 'lodash/get';
+import axios from 'axios/index';
 
 function getTitle(authType) {
     switch (authType) {
@@ -71,6 +75,13 @@ function AuthHeader({ authType }) {
     );
 }
 
+function ErrorText({ error }) {
+    if (!error) {
+        return null;
+    }
+    return <p className={style.auth__error}>{getValidationError(error)}</p>;
+}
+
 class Auth extends React.Component {
     state = {
         valid: false,
@@ -90,11 +101,24 @@ class Auth extends React.Component {
     onSubmit = () => {
         const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
-        getAuthAction(authType, model);
+        const { login, registerBy, email } = model;
+        getAuthAction(authType, model)
+            .then(async res => {
+                const { user = {} } = res || {};
+                const uid = get(res, 'user.uid', '');
+                const data = { login, registerBy, uid, email };
+
+                const options = await getFirebaseHeaderToken();
+                return axios.post('api/v1/user', data, options);
+            })
+            .catch(error => {
+                this.setState({ error: error.code });
+                setTimeout(() => this.setState({ error: '' }), 8000);
+            });
     };
 
     render() {
-        const { valid } = this.state;
+        const { valid, error } = this.state;
         const { authType = 'auth', handleModal } = this.props;
 
         return (
@@ -122,6 +146,7 @@ class Auth extends React.Component {
                             />
                         );
                     })}
+                    <ErrorText error={error} />
                     <Button
                         className={style.auth__button}
                         type="submit"
