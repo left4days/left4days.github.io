@@ -1,6 +1,7 @@
 import React from 'react';
 import onClickOutside from 'react-onclickoutside';
 import { Column, Row } from 'ui/Layout';
+import { Link } from 'react-router-dom';
 
 import style from './style.scss';
 
@@ -10,6 +11,9 @@ function DropDown({ isOpen, signOutUser }) {
     }
     return (
         <Column className={style.dropdown}>
+            <Link className={style.dropdown__button} to="/admin">
+                Admin
+            </Link>
             <button onClick={signOutUser} className={style.dropdown__button}>
                 Log Out
             </button>

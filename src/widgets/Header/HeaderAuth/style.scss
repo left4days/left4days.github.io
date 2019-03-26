@@ -1,14 +1,14 @@
 .dropdown {
   position: absolute;
   top: 60px;
-  right: 0;
-  width: 120px;
+  right: 20px;
+  width: 150px;
   display: flex;
   &:after {
     content: '';
     position: absolute;
     top: -5px;
-    left: calc(120px / 2 - 2.5px);
+    left: calc(150px / 2 - 2.5px);
     background: $white;
     width: 10px;
     z-index: 1;
@@ -16,13 +16,26 @@
     transform: rotate(45deg);
   }
   &__button {
-    height: 27px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: $white;
     z-index: 2;
     border: none;
-    border-radius: 5px;
+    font-size: 14px;
+    color: $bgDark;
     width: 100%;
     cursor: pointer;
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom: 1px solid $grey;
+    }
+    &:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
     &:hover {
       background-color: #ededed;
       transition: .1s;
