@@ -9,6 +9,8 @@ import { Modal } from 'ui/Modal';
 import routes from './routes';
 import { signOutUser } from 'widgets/Auth/firebase-configuration';
 
+import style from './style.scss';
+
 const config = {
     apiKey: 'AIzaSyDDaaOyfmalL4ZzY1tlTneHbmdZ29tkxgc',
     authDomain: 'dragoneggteamepmire.firebaseapp.com',
@@ -55,7 +57,7 @@ class App extends Component {
         return (
             <Router>
                 <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
-                <div className="App">
+                <div className={style.app}>
                     {routes.map(route => {
                         const { path, exact, component } = route;
                         return <Route key={path} path={path} exact={exact} component={component} />;
