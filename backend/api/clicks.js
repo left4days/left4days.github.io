@@ -3,10 +3,6 @@ const ClickService = require('../services/ClickService');
 
 const clickService = new ClickService();
 
-async function checkIsUserExist(req, res, next) {
-    res.json({ success: false, errorMessage: 'This login already exist', meta: { login: false } });
-}
-
 async function updateUserClicks(req, res, next) {
     const { body, user } = req;
     const { count = 0 } = body;
@@ -17,10 +13,13 @@ async function updateUserClicks(req, res, next) {
 }
 
 async function getUserClicks(req, res, next) {
-    await clickService.getUserClicksById(req.body);
+    const { uid } = req.params;
+    const confirmedClicks = await clickService.getUserClicksById(uid);
+
+    res.json({ success: true, data: { confirmedClicks } });
 }
 
 module.exports = {
-    GET: [['/api/v1/click/:userId', requiresAuth, getUserClicks]],
+    GET: [['/api/v1/click/:uid', requiresAuth, getUserClicks]],
     POST: [['/api/v1/click/', requiresAuth, updateUserClicks]],
 };

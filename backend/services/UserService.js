@@ -40,7 +40,6 @@ class UserService {
         let result = {};
 
         await userRef.child(uid).once('value', snap => {
-            console.log('tests', snap.val());
             result = snap.val();
         });
 

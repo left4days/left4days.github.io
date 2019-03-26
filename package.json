@@ -2,7 +2,7 @@
   "name": "dragon",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://left4days.github.io/",
+  "homepage": "https://left4days.github.io/",
   "dependencies": {
     "@babel/core": "7.2.2",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
