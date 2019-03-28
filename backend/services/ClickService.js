@@ -21,10 +21,10 @@ class ClickService {
         this.clicks = 0;
     }
 
-    async getUserClicksById(id) {
+    async getUserClicksById(uid) {
         let result = 0;
 
-        await clicksRef.child(id).once('value', snap => {
+        await clicksRef.child(uid).once('value', snap => {
             const clicks = snap.val();
 
             if (!isNaN(parseInt(clicks)) && clicks > 0) {
@@ -32,7 +32,7 @@ class ClickService {
                 return;
             }
 
-            clicksRef.update({ [id]: 0 }).then(() => {
+            clicksRef.update({ [uid]: 0 }).then(() => {
                 result = 0;
             });
         });
@@ -41,29 +41,29 @@ class ClickService {
     }
 
     async updateUserClicks(userId, count) {
-        let finalClicks = await this.getUserClicksById(userId);
-        finalClicks += count;
+        let confirmedCount = await this.getUserClicksById(userId);
+        confirmedCount += count;
 
-        if (isNaN(count) || isNaN(finalClicks)) {
+        if (isNaN(count) || isNaN(confirmedCount)) {
             return {
                 success: false,
                 errorMessage: 'implementData is wrong',
-                meta: { count: isNaN(count), finalClicks: isNaN(finalClicks) },
+                meta: { count: isNaN(count), confirmedCount: isNaN(confirmedCount) },
             };
         }
 
         try {
             await clicksRef.update({
-                [userId]: finalClicks,
+                [userId]: confirmedCount,
             });
         } catch (err) {
             console.log('ERROR DB UPDATE CLICKS FOR', userId);
             console.log(err);
 
-            return { finalClicks: finalClicks - count };
+            return { confirmedCount: confirmedCount - count };
         }
 
-        return { finalClicks };
+        return { confirmedCount };
     }
 
     async getTopClickers(limit) {

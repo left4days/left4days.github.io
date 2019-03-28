@@ -46,7 +46,6 @@ class HeaderAuthAuthorized extends React.Component {
                 <div>
                     <p onClick={this.handleOpenDropdown}>
                         <b>{login}</b>
-                        <span>({clicks})</span>
                     </p>
                     <p className={style.header__user} onClick={this.handleOpenDropdown}>
                         {email}

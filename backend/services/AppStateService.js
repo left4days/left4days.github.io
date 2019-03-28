@@ -13,8 +13,9 @@ class AppStateService {
         await appStateRef.once('value', snap => {
             const { actionState } = snap.val() || {};
 
-            if (actionState instanceof String) {
+            if (typeof actionState === 'string') {
                 state = actionState;
+                return;
             }
         });
 
@@ -37,8 +38,6 @@ class AppStateService {
             console.log(error);
             return { success: false, errorMessage: 'ERROR IN CHANGE CURRENT APP STATE' };
         }
-
-        console.log('switch to', newState);
 
         return newState;
     }
