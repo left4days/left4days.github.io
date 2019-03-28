@@ -53,12 +53,12 @@ class AdminPanel extends React.PureComponent {
             return this.updateTop10();
         });
 
-        firebase
-            .database()
-            .ref('/appState')
-            .on('value', snapshot => {
-                console.log('changed', snapshot.val());
-            });
+        // firebase
+        //     .database()
+        //     .ref('server/saving-data/fireblog/clicks')
+        //     .on('value', snapshot => {
+        //         console.log('changed', snapshot.val());
+        //     });
     };
 
     getCurrentWinners = async () => {
@@ -92,7 +92,9 @@ class AdminPanel extends React.PureComponent {
         const { actionState } = this.state;
         const options = await getFirebaseHeaderToken();
         const data = { currentState: actionState };
-        axios.post('/api/v1/appState/switchState', data, options).then(res => {});
+        axios.post('/api/v1/appState/switchState', data, options).then(res => {
+            this.setState({ actionState: res.data.data });
+        });
     };
 
     render() {
