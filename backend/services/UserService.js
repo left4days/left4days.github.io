@@ -40,7 +40,6 @@ class UserService {
         let result = {};
 
         await userRef.child(uid).once('value', snap => {
-            console.log('tests', snap.val());
             result = snap.val();
         });
 
@@ -55,6 +54,7 @@ class UserService {
 
     async registerNewUser(data) {
         const { uid, login, registerBy, email } = data;
+        console.log('datauid', data);
         try {
             await userRef.update({
                 [uid]: {
@@ -134,12 +134,11 @@ class UserService {
     }
 
     async customRegisterNewUser(reqBody) {
-        const { access_token } = reqBody;
+        const { user_id } = reqBody;
         return firebaseAdmin
             .auth()
-            .createCustomToken(access_token)
+            .createCustomToken(user_id)
             .then(function(customToken) {
-                console.log('test', customToken);
                 return customToken;
             })
             .catch(function(error) {

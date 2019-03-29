@@ -34,11 +34,12 @@ class HeaderAuthAuthorized extends React.Component {
     };
 
     render() {
+        console.log('user', this.props.user);
         const {
             user: { email, userData = {} },
             signOutUser,
         } = this.props;
-        const { login = '', clicks = 0 } = userData;
+        const { login = '', clicks = 0, email: socialEmail } = userData;
         const { isOpen } = this.state;
 
         return (
@@ -49,7 +50,7 @@ class HeaderAuthAuthorized extends React.Component {
                         <span>({clicks})</span>
                     </p>
                     <p className={style.header__user} onClick={this.handleOpenDropdown}>
-                        {email}
+                        {email || socialEmail}
                     </p>
                 </div>
                 <DropDown isOpen={isOpen} signOutUser={signOutUser} />

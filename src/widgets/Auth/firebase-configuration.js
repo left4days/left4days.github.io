@@ -46,17 +46,18 @@ export function signInWithVK() {
         console.log(getAllUrlParams(hash));
         const { access_token, user_id, email } = getAllUrlParams(hash);
         if (access_token) {
-            return axios.post('/api/v1/custom-register', { access_token }).then(res => {
+            return axios.post('/api/v1/custom-register', { user_id }).then(res => {
                 firebase
                     .auth()
                     .signInWithCustomToken(res.data.data.custom_token)
                     .then(async user => {
-                        const data = { login: `vk_${user_id}`, email, registerBy: 'vk' };
+                        const data = { uid: user_id, login: `id${user_id}`, email, registerBy: 'vk' };
                         const options = await getFirebaseHeaderToken();
+                        newWin.close();
                         return axios.post('api/v1/user', data, options);
                     })
                     .catch(function(error) {
-                        console.log(error);
+                        return error.code;
                     });
             });
         }

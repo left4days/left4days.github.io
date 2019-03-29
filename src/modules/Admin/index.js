@@ -24,9 +24,17 @@ function Table({ text, onClick, buttonText, data }) {
         <Column>
             <UserHeading text={text} onClick={onClick} buttonText={buttonText} />
             <Column ai="flex-start">
-                <UserRow user={{ login: 'LOGIN', email: 'EMAIL', registerBy: 'REGISTERED BY', clicks: 'CLICKS' }} />
+                <UserRow
+                    user={{
+                        login: 'LOGIN',
+                        email: 'EMAIL',
+                        registerBy: 'REGISTERED BY',
+                        clicks: 'CLICKS',
+                        contact: 'CONTACT',
+                    }}
+                />
                 {data.map((user, i) => (
-                    <UserRow key={user.login + user.clicks} idx={i + 1} user={user} />
+                    <UserRow withLink key={user.login + user.clicks} idx={i + 1} user={user} />
                 ))}
             </Column>
         </Column>
