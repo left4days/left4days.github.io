@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import cx from 'classnames';
 import firebase from 'firebase';
 import axios from 'axios';
 import get from 'lodash/get';
 
 import { Header } from 'widgets/Header';
 import { Modal } from 'ui/Modal';
+import DevelopTower from './DevelopTower';
 import routes from './routes';
 import { signOutUser } from 'widgets/Auth/firebase-configuration';
 
@@ -23,7 +25,7 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null, user: 'loading' };
+    state = { modal: null, user: 'loading', actionState: 'FINISHED' };
 
     componentWillMount() {
         firebase.auth().onAuthStateChanged(res => {
@@ -36,6 +38,10 @@ class App extends Component {
             } else {
                 this.setState({ user: false });
             }
+        });
+
+        axios.get('/api/v1/appState/state').then(res => {
+            this.setState({ actionState: res.data.data });
         });
     }
 
@@ -52,8 +58,21 @@ class App extends Component {
         this.setState({ user: false });
     };
 
+    formRef = ref => (this.form = ref);
+
+    onDevValidChange = () => {
+        window.localStorage.setItem('devMode', 1);
+        this.setState({ devConfirmed: true });
+    };
+
     render() {
-        const { modal, user } = this.state;
+        const { modal, user, actionState, devConfirmed } = this.state;
+        const isDevMode = !!window.localStorage.getItem('devMode');
+
+        if (actionState === 'DEV' && !isDevMode) {
+            return <DevelopTower onValidChange={this.onDevValidChange} />;
+        }
+
         return (
             <Router>
                 <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />

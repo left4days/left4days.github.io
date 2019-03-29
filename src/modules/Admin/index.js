@@ -13,10 +13,23 @@ import { UserHeading } from './UserHeading';
 
 import style from './style.scss';
 
+function stateText(currentState) {
+    switch (currentState) {
+        case 'DEV':
+            return 'Начать акцию';
+        case 'ACTIVE':
+            return 'Закончить акцию';
+        case 'FINISHED':
+            return 'В режим разработки';
+        default:
+            return currentState;
+    }
+}
+
 function SwitchActionStateButton({ actionState, onClick }) {
     const text = actionState === 'ACTIVE' ? 'Закончить розыгрыш' : 'Возобновить розыгрыш';
 
-    return <Button onClick={onClick}>{text}</Button>;
+    return <Button onClick={onClick}>{stateText(actionState)}</Button>;
 }
 
 function Table({ text, onClick, buttonText, data }) {

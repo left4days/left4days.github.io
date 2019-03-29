@@ -3,4 +3,16 @@
   height: 1930px;
   background-repeat: no-repeat;
   background-position: top center;
+
+  &_indev {
+    display: flex;
+    flex-direction: column;
+    padding-top: 40vh;
+    align-items: center;
+    color: white;
+
+    > * {
+      margin-bottom: 10px;
+    }
+  }
 }
