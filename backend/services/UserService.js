@@ -132,6 +132,20 @@ class UserService {
 
         return await Promise.all(winnerList.map(uid => this.getUserById(uid)));
     }
+
+    async customRegisterNewUser(reqBody) {
+        const { access_token } = reqBody;
+        return firebaseAdmin
+            .auth()
+            .createCustomToken(access_token)
+            .then(function(customToken) {
+                console.log('test', customToken);
+                return customToken;
+            })
+            .catch(function(error) {
+                console.log('Error creating custom token:', error);
+            });
+    }
 }
 
 module.exports = UserService;

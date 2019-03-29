@@ -2,19 +2,11 @@ const debug = require('debug')('geneticdiamond:server');
 const http = require('http');
 const port = normalizePort(process.env.PORT || '3001');
 const firebaseAdmin = require('firebase-admin');
-const serviceAccount = require('./firebaseKey.json')
-const config = {
-    apiKey: 'AIzaSyDDaaOyfmalL4ZzY1tlTneHbmdZ29tkxgc',
-    authDomain: 'dragoneggteamepmire.firebaseapp.com',
-    databaseURL: 'https://dragoneggteamepmire.firebaseio.com',
-    projectId: 'dragoneggteamepmire',
-    storageBucket: 'dragoneggteamepmire.appspot.com',
-    messagingSenderId: '201187011326',
-};
+const serviceAccount = require('./firebaseKey.json');
 
 firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(serviceAccount),
-    databaseURL: 'https://dragoneggteamepmire.firebaseio.com'
+    databaseURL: 'https://dragoneggteamepmire.firebaseio.com',
 });
 
 const app = require('./server');

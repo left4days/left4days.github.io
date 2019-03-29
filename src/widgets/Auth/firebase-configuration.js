@@ -1,7 +1,9 @@
 import React from 'react';
 import firebase from 'firebase';
+import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { getAllUrlParams } from './helpers';
+import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
 
 const PROVIDERS = {
     google: new firebase.auth.GoogleAuthProvider(),
@@ -41,9 +43,22 @@ export function signInWithVK() {
     const newWin = window.open(url, 'vk-login', 'width=665,height=370');
     newWin.onload = function() {
         let hash = newWin.location.hash;
-        const { access_token } = getAllUrlParams(hash);
+        console.log(getAllUrlParams(hash));
+        const { access_token, user_id, email } = getAllUrlParams(hash);
         if (access_token) {
-            return firebase.auth().signInWithCustomToken(access_token);
+            return axios.post('/api/v1/custom-register', { access_token }).then(res => {
+                firebase
+                    .auth()
+                    .signInWithCustomToken(res.data.data.custom_token)
+                    .then(async user => {
+                        const data = { login: `vk_${user_id}`, email, registerBy: 'vk' };
+                        const options = await getFirebaseHeaderToken();
+                        return axios.post('api/v1/user', data, options);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            });
         }
     };
 }
