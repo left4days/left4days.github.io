@@ -2,9 +2,22 @@ const firebaseAdmin = require('firebase-admin');
 const db = firebaseAdmin.database();
 const appStateRef = db.ref('server/saving-data/fireblog/appState');
 
+function stateFSM(currentState) {
+    switch (currentState) {
+        case 'DEV':
+            return 'ACTIVE';
+        case 'ACTIVE':
+            return 'FINISHED';
+        case 'FINISHED':
+            return 'DEV';
+        default:
+            return currentState;
+    }
+}
+
 class AppStateService {
     constructor() {
-        this.clicks = 0;
+        this.lastVerifyDevTS = null;
     }
 
     async getAppState() {
@@ -22,6 +35,21 @@ class AppStateService {
         return state;
     }
 
+    async checkDevAccess(password) {
+        let isValid = false;
+
+        await appStateRef.once('value', snap => {
+            const { devPassword } = snap.val() || {};
+
+            if (devPassword === password) {
+                isValid = true;
+                return;
+            }
+        });
+
+        return isValid;
+    }
+
     async switchAppState(currentState) {
         let newState = currentState;
 
@@ -29,7 +57,7 @@ class AppStateService {
             return { success: false, errorMessage: 'invalid state' };
         }
 
-        newState = currentState === 'ACTIVE' ? 'FINISHED' : 'ACTIVE';
+        newState = stateFSM(currentState);
 
         try {
             await appStateRef.update({ actionState: newState });
