@@ -121,7 +121,6 @@ class AdminPanel extends React.PureComponent {
     getAllUsers = async () => {
         const options = await getFirebaseHeaderToken();
         axios.get('/api/v1/users', options).then(async res => {
-            console.log('!!', res.data);
             const encodedUri = encodeURI('data:text/csv;charset=utf-8,' + res.data);
             const link = document.createElement('a');
             link.setAttribute('href', encodedUri);
