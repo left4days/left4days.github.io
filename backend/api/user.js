@@ -44,10 +44,18 @@ async function customRegisterNewUser(req, res) {
     res.json({ success: true, data: { custom_token } });
 }
 
+async function getAllUsers(req, res) {
+    const users_csv = await userService.getAllUsersInCSV(req.params);
+
+    res.setHeader('Content-Disposition', 'attachment; filename=data.csv');
+    res.setHeader('content-type', 'text/csv');
+    res.status(200).send(new Buffer(users_csv));
+}
+
 module.exports = {
     GET: [
-        ['/api/v1/user/exist', checkIsUserExist],
         ['/api/v1/user/:userId', getUserData],
+        ['/api/v1/users', requiresAdmin, getAllUsers],
         ['/api/v1/user/top/:limit', requiresAdmin, getTopClickers],
         ['/api/v1/user/winners/:limit', requiresAdmin, getWinners],
         ['/api/v1/user/winners/create/:limit', requiresAdmin, generateWinners],

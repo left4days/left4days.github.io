@@ -118,6 +118,20 @@ class AdminPanel extends React.PureComponent {
         });
     };
 
+    getAllUsers = async () => {
+        const options = await getFirebaseHeaderToken();
+        axios.get('/api/v1/users', options).then(async res => {
+            console.log('!!', res.data);
+            const encodedUri = encodeURI('data:text/csv;charset=utf-8,' + res.data);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'all-users.csv');
+            document.body.appendChild(link); // Required for FF
+
+            link.click(); // This will download the data file named "my_data.csv".
+        });
+    };
+
     render() {
         const { isUserAdmin, actionState, winners, topClickers } = this.state;
 
@@ -130,7 +144,7 @@ class AdminPanel extends React.PureComponent {
                 <Column className={style.admin__container}>
                     <Row className={style.admin__header}>
                         <SwitchActionStateButton actionState={actionState} onClick={this.switchAppState} />
-                        <Button style="void" margin="left">
+                        <Button style="void" margin="left" onClick={this.getAllUsers}>
                             Выгрузить полный список участников
                         </Button>
                     </Row>
