@@ -127,25 +127,27 @@ class AdminPanel extends React.PureComponent {
 
         return (
             <Column className={style.admin}>
-                <Row className={style.admin__header}>
-                    <SwitchActionStateButton actionState={actionState} onClick={this.switchAppState} />
-                    <Button style="void" margin="left">
-                        Выгрузить полный список участников
-                    </Button>
-                </Row>
-                <Column>
-                    <Table
-                        text="30 победителей"
-                        onClick={this.determineWinners}
-                        buttonText="Определить"
-                        data={winners}
-                    />
-                    <Table
-                        text="Топ-10 кликеров:"
-                        onClick={this.updateTop10}
-                        buttonText="Обновить"
-                        data={topClickers}
-                    />
+                <Column className={style.admin__container}>
+                    <Row className={style.admin__header}>
+                        <SwitchActionStateButton actionState={actionState} onClick={this.switchAppState} />
+                        <Button style="void" margin="left">
+                            Выгрузить полный список участников
+                        </Button>
+                    </Row>
+                    <Column>
+                        <Table
+                            text="30 победителей"
+                            onClick={this.determineWinners}
+                            buttonText="Определить"
+                            data={winners}
+                        />
+                        <Table
+                            text="Топ-10 кликеров:"
+                            onClick={this.updateTop10}
+                            buttonText="Обновить"
+                            data={topClickers}
+                        />
+                    </Column>
                 </Column>
             </Column>
         );
