@@ -40,6 +40,16 @@ class ClickService {
         return result;
     }
 
+    async getAllUsersClicks() {
+        let result = 0;
+
+        await clicksRef.once('value', snap => {
+            result = snap.val();
+        });
+
+        return result;
+    }
+
     async updateUserClicks(userId, count) {
         let confirmedCount = await this.getUserClicksById(userId);
         confirmedCount += count;

@@ -1,5 +1,7 @@
 const firebaseAdmin = require('firebase-admin');
 const get = require('lodash/get');
+const mergeDeep = require('lodash/merge');
+const json2csv = require('json2csv');
 const db = firebaseAdmin.database();
 const userRef = db.ref('server/saving-data/fireblog/users');
 const appStateRef = db.ref('server/saving-data/fireblog/appState');
@@ -131,6 +133,44 @@ class UserService {
         }
 
         return await Promise.all(winnerList.map(uid => this.getUserById(uid)));
+    }
+
+    async getAllUsersInCSV(params) {
+        const { limit } = params;
+
+        let participants = {};
+
+        try {
+            await userRef.once('value', snapshot => {
+                participants = snapshot.val() || {};
+            });
+        } catch (err) {
+            console.log('ERROR DB GET TOP CLICKERS');
+            console.log(err);
+
+            return participants;
+        }
+
+        const clicks = (await clickService.getAllUsersClicks()) || {};
+
+        for (const uid in participants) {
+            if (participants[uid] && clicks[uid]) {
+                participants[uid] = { ...participants[uid], clicks: clicks[uid] };
+            }
+        }
+
+        const resJSON = Object.entries(participants).map(([uid, data], i) => ({ idx: i + 1, uid, ...data }));
+
+        const fields = ['idx', 'email', 'registerBy', 'uid', 'login', 'clicks'];
+        const opts = { fields };
+
+        try {
+            const csv = json2csv.parse(resJSON, opts);
+            return csv;
+        } catch (err) {
+            console.error(err);
+            return '';
+        }
     }
 
     async customRegisterNewUser(reqBody) {
