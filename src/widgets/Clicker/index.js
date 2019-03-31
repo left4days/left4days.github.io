@@ -1,6 +1,5 @@
 import React from 'react';
 import get from 'lodash/get';
-import debounce from 'lodash/debounce';
 import axios from 'axios';
 import firebase from 'firebase';
 
@@ -27,10 +26,6 @@ class Clicker extends React.PureComponent {
     }
 
     componentWillMount() {
-        const { confirmedClicks } = this.state;
-        const currentUser = get(firebase.auth(), 'currentUser') || {};
-        const { uid } = currentUser;
-
         firebase.auth().onAuthStateChanged(async res => {
             const uid = get(res, 'uid', '');
             const options = await getFirebaseHeaderToken();
@@ -52,13 +47,12 @@ class Clicker extends React.PureComponent {
 
         this.setState({ currentSeriesCount: 0 }, async () => {
             const options = await getFirebaseHeaderToken();
-            const currentUser = get(firebase.auth(), 'currentUser') || {};
             axios
                 .post(`/api/v1/click/`, { count: currentSerie }, options)
-                .then(res => {
+                .then(() => {
                     this.setState({ confirmedClicks: confirmedClicks + currentSerie });
                 })
-                .catch(error => {
+                .catch(() => {
                     const { currentSeriesCount } = this.state;
                     console.warn('save locally', currentSeriesCount, currentSerie);
                     setState({ currentSeriesCount: currentSeriesCount + currentSerie });
@@ -76,17 +70,18 @@ class Clicker extends React.PureComponent {
     }
 
     handleClick = () => {
-        const { confirmedClicks, displayedClicks, currentSeriesCount } = this.state;
+        const { getConfirmedClicks } = this.props;
+        const { displayedClicks, currentSeriesCount, confirmedClicks } = this.state;
 
         this.setState(
             { currentSeriesCount: currentSeriesCount + 1, displayedClicks: displayedClicks + 1 },
             this.debounceHandle()
         );
+        getConfirmedClicks(confirmedClicks);
     };
 
     render() {
         const { displayedClicks } = this.state;
-
         return (
             <Column className={style.clicker}>
                 <p className={style.clicker__title}>Ты сделал уже</p>

@@ -3,9 +3,6 @@ $transitionActive: ease-in 150ms;
 
 .clicker {
   width: 600px;
-  border: 1px solid $orange;
-  border-radius: 5px;
-  background: linear-gradient(rgba(255, 81, 0, 0.3), rgba(255, 81, 0, 0.1));
   padding: 20px 30px;
   &__title {
     font-size: 18px;

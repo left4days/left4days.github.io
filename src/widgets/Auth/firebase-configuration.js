@@ -11,7 +11,7 @@ const PROVIDERS = {
     twitter: new firebase.auth.TwitterAuthProvider(),
 };
 
-export function registerUser(login, email, password, registerBy) {
+export function registerUser(login, email, password) {
     return firebase.auth().createUserWithEmailAndPassword(email, password);
 }
 
@@ -37,7 +37,7 @@ export function signWithSocial(type) {
 
 export function signInWithVK() {
     const clientId = '6916700';
-    const redirectUri = 'localhost:3000';
+    const redirectUri = 'http://ssd.empire.gg/';
     const url = `https://oauth.vk.com/authorize?client_id=${clientId}&scope=email&redirect_uri=${redirectUri}&response_type=token`;
 
     const newWin = window.open(url, 'vk-login', 'width=665,height=370');
