@@ -1,3 +1,9 @@
 .home {
-  @include container-size;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-image: url('../../statics/bg.png');
+
+  &__container {
+    @include container-size;
+  }
 }
