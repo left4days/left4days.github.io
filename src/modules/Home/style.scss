@@ -2,6 +2,8 @@
   background-repeat: no-repeat;
   background-position: top center;
   background-image: url('../../statics/bg.png');
+  min-height: 1930px;
+  display: block;
 
   &__container {
     @include container-size;
