@@ -1,16 +1,34 @@
 import React from 'react';
+import cx from 'classnames';
 import { Row, Column } from 'ui/Layout';
 import style from './style.scss';
+import emailIcon from 'statics/email_icon.svg';
 
 function getHref(login, email, registerBy) {
     switch (registerBy) {
         case 'email':
-            return `mailto:${email}?subject="Поздравляем!%20Вы%20выиграли%20приз%20в%20конкурсе%20от%20Empire&amp;body="Test%20body"`;
+            return `mailto:${email}?subject=Поздравляем!%20Вы%20выиграли%20приз%20в%20конкурсе%20от%20Empire&amp;body="Test%20body"`;
         case 'vk':
-            return `vk.com/${login}`;
+            return `https://vk.com/${login}`;
         default:
             return '#';
     }
+}
+
+function renderLink(withLink, login, email, registerBy) {
+    if (!withLink) {
+        return <p className={style.admin__row_item}>CONTACT</p>;
+    }
+    return (
+        <a
+            className={cx(style.admin__row_item, style.admin__image)}
+            target="_blank"
+            href={getHref(login, email, registerBy)}
+            rel="noopener nooferrer"
+        >
+            <img src={emailIcon} alt="email_icon" />
+        </a>
+    );
 }
 
 function UserRow({ user, idx = '№', withLink }) {
@@ -23,9 +41,7 @@ function UserRow({ user, idx = '№', withLink }) {
             <p className={style.admin__row_item}>{email}</p>
             <p className={style.admin__row_item}>{registerBy}</p>
             <p className={style.admin__row_item}>{clicks}</p>
-            <a href={getHref(login, email, registerBy)} rel="noopener nooferrer">
-                Send message
-            </a>
+            {renderLink(withLink, login, email, registerBy)}
         </Row>
     );
 }
