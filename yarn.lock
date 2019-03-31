@@ -9726,6 +9726,11 @@ react-text-mask@^5.4.3:
   dependencies:
     prop-types "^15.5.6"
 
+react-vk@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-vk/-/react-vk-4.2.0.tgz#7834844c3a02259cb45e227a9c7428c0bf2e5aec"
+  integrity sha512-BQLgatsqwIclRVb1AOMjeAQi8o4TjYpMTNX7fl7YHj6DFn/baduRWHzN/Vb6Bx4feEOlZj3hzw1T4egjSAPMbQ==
+
 react@^16.8.4:
   version "16.8.4"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"

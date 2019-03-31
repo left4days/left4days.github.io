@@ -38,6 +38,12 @@ async function generateWinners(req, res) {
     res.json({ success: true, data: users });
 }
 
+async function customRegisterNewUser(req, res) {
+    const custom_token = await userService.customRegisterNewUser(req.body);
+
+    res.json({ success: true, data: { custom_token } });
+}
+
 module.exports = {
     GET: [
         ['/api/v1/user/exist', checkIsUserExist],
@@ -46,5 +52,5 @@ module.exports = {
         ['/api/v1/user/winners/:limit', requiresAdmin, getWinners],
         ['/api/v1/user/winners/create/:limit', requiresAdmin, generateWinners],
     ],
-    POST: [['/api/v1/user', registerUser]],
+    POST: [['/api/v1/user', registerUser], ['/api/v1/custom-register', customRegisterNewUser]],
 };

@@ -54,6 +54,7 @@ class UserService {
 
     async registerNewUser(data) {
         const { uid, login, registerBy, email } = data;
+        console.log('datauid', data);
         try {
             await userRef.update({
                 [uid]: {
@@ -130,6 +131,19 @@ class UserService {
         }
 
         return await Promise.all(winnerList.map(uid => this.getUserById(uid)));
+    }
+
+    async customRegisterNewUser(reqBody) {
+        const { user_id } = reqBody;
+        return firebaseAdmin
+            .auth()
+            .createCustomToken(user_id)
+            .then(function(customToken) {
+                return customToken;
+            })
+            .catch(function(error) {
+                console.log('Error creating custom token:', error);
+            });
     }
 }
 

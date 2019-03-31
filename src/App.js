@@ -12,6 +12,7 @@ import routes from './routes';
 import { signOutUser } from 'widgets/Auth/firebase-configuration';
 
 import style from './style.scss';
+import { getAllUrlParams } from './widgets/Auth/helpers';
 
 const config = {
     apiKey: 'AIzaSyDDaaOyfmalL4ZzY1tlTneHbmdZ29tkxgc',

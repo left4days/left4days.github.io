@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row } from 'ui/Layout';
+import { signWithSocial } from './firebase-configuration';
 import fbIcon from 'statics/social/fb.svg';
 import twIcon from 'statics/social/tw.svg';
 import googleIcon from 'statics/social/google.svg';
@@ -7,16 +8,24 @@ import vkIcon from 'statics/social/vk.svg';
 
 import style from './style.scss';
 
-const socialConfig = [vkIcon, twIcon, fbIcon, googleIcon];
+const socialConfig = [
+    { type: 'vk', icon: vkIcon },
+    { type: 'twitter', icon: twIcon },
+    { type: 'facebook', icon: fbIcon },
+    { type: 'google', icon: googleIcon },
+];
 
 function AuthSocial() {
     return (
         <Row ai="center" jc="center" className={style.social__container}>
-            {socialConfig.map((item, i) => (
-                <button className={style.social} key={i}>
-                    <img src={item} alt="social-icon" />
-                </button>
-            ))}
+            {socialConfig.map(item => {
+                const { type, icon } = item;
+                return (
+                    <button className={style.social} key={type} onClick={() => signWithSocial(type)}>
+                        <img src={icon} alt="social-icon" />
+                    </button>
+                );
+            })}
         </Row>
     );
 }
