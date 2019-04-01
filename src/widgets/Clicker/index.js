@@ -55,7 +55,7 @@ class Clicker extends React.PureComponent {
                 .catch(() => {
                     const { currentSeriesCount } = this.state;
                     console.warn('save locally', currentSeriesCount, currentSerie);
-                    setState({ currentSeriesCount: currentSeriesCount + currentSerie });
+                    this.setState({ currentSeriesCount: currentSeriesCount + currentSerie });
                 });
         });
 
