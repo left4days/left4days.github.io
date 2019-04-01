@@ -15,7 +15,7 @@ async function getFirebaseHeaderToken() {
 
         return {
             headers: {
-                FIREBASE_AUTH_TOKEN: authToken,
+                firebase_auth_token: authToken,
             },
         };
     }
