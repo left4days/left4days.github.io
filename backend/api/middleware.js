@@ -9,7 +9,7 @@ async function requiresAuth(req, res, next) {
     const idToken = req.header('FIREBASE_AUTH_TOKEN');
     let decodedIdToken;
 
-    console.log(req.header);
+    console.log(req);
 
     try {
         decodedIdToken = await authService.verifyIdToken(idToken);
@@ -26,7 +26,7 @@ async function requiresAdmin(req, res, next) {
     const idToken = req.header('FIREBASE_AUTH_TOKEN');
     let decodedIdToken;
 
-    console.log(req.header);
+    console.log(req);
 
     try {
         decodedIdToken = await authService.verifyIdToken(idToken);
