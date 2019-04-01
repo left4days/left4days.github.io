@@ -11,6 +11,12 @@
     .title__container:last-child {
       h2 {
         @include main-font(500);
+        @include screen-lt(desktop) {
+          font-size: 28px;
+        }
+        @include screen-lt(mobile) {
+          font-size: 38px;
+        }
       }
     }
     &:after {
@@ -21,6 +27,12 @@
       background-image: url('../../../../statics/hero.png');
       width: 515px;
       height: 350px;
+      @include screen-lt(tablet) {
+        width: 313px;
+      }
+      @include screen-lt(mobile) {
+        display: none;
+      }
     }
   }
 }

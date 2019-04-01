@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import cx from 'classnames';
 import firebase from 'firebase';
 import axios from 'axios';
 import get from 'lodash/get';
@@ -12,7 +11,6 @@ import routes from './routes';
 import { signOutUser } from 'widgets/Auth/firebase-configuration';
 
 import style from './style.scss';
-import { getAllUrlParams } from './widgets/Auth/helpers';
 
 const config = {
     apiKey: 'AIzaSyDDaaOyfmalL4ZzY1tlTneHbmdZ29tkxgc',
@@ -67,7 +65,7 @@ class App extends Component {
     };
 
     render() {
-        const { modal, user, actionState, devConfirmed } = this.state;
+        const { modal, user, actionState } = this.state;
         const isDevMode = !!window.localStorage.getItem('devMode');
 
         if (actionState === 'DEV' && !isDevMode) {
@@ -77,10 +75,10 @@ class App extends Component {
         return (
             <Router>
                 <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
-                <div className={style.app}>
+                <div className="app">
                     {routes.map(route => {
                         const { path, exact, component } = route;
-                        return <Route key={path} path={path} exact={exact} component={component} />;
+                        return <Route key={path} path={path} exact={exact} component={component} user={user} />;
                     })}
                 </div>
                 <Modal modal={modal} handleModal={this.handleModal} onClose={this.handleModalClose} />

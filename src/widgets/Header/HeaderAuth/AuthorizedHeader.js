@@ -34,7 +34,6 @@ class HeaderAuthAuthorized extends React.Component {
     };
 
     render() {
-        console.log('user', this.props.user);
         const {
             user: { email, userData = {} },
             signOutUser,

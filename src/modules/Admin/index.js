@@ -27,8 +27,6 @@ function stateText(currentState) {
 }
 
 function SwitchActionStateButton({ actionState, onClick }) {
-    const text = actionState === 'ACTIVE' ? 'Закончить розыгрыш' : 'Возобновить розыгрыш';
-
     return <Button onClick={onClick}>{stateText(actionState)}</Button>;
 }
 
@@ -73,13 +71,6 @@ class AdminPanel extends React.PureComponent {
 
             return this.updateTop10();
         });
-
-        // firebase
-        //     .database()
-        //     .ref('server/saving-data/fireblog/clicks')
-        //     .on('value', snapshot => {
-        //         console.log('changed', snapshot.val());
-        //     });
     };
 
     getCurrentWinners = async () => {
