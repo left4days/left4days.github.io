@@ -20,6 +20,7 @@ class Home extends React.Component {
 
     render() {
         const { confirmedClicks } = this.state;
+        const { user, handleModal } = this.props;
         return (
             <Column className={cx(style.home, style[`home__background_${countLabel(confirmedClicks).background}`])}>
                 <Column className={style.home__container}>
@@ -27,7 +28,7 @@ class Home extends React.Component {
                     <HomeLabels />
                     <Column ai="center">
                         <HomeInfo confirmedClicks={confirmedClicks} />
-                        <Clicker getConfirmedClicks={this.getConfirmedClicks} />
+                        <Clicker getConfirmedClicks={this.getConfirmedClicks} user={user} handleModal={handleModal} />
                     </Column>
                 </Column>
             </Column>

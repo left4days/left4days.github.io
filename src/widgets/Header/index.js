@@ -12,8 +12,8 @@ function Header({ handleModal, user, signOutUser }) {
         <Column className={style.header} ai="center" jc="space-between">
             <Row className={style.header__container}>
                 <Row jc="flex-start" className={style.header__logo_double}>
-                    <img className={style.header__logo} src={fireCudaLogo} alt="firecuda" />
                     <img className={style.header__logo} src={seagateLogo} alt="seagate" />
+                    <img className={style.header__logo} src={fireCudaLogo} alt="firecuda" />
                 </Row>
                 <Column className={style.header__logo_container}>
                     <Link to="/">

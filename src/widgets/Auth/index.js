@@ -36,7 +36,7 @@ function BottomPanel(props) {
             return (
                 <Description>
                     Нажимая на кнопку Зарегистрироваться, вы подтверждаете свое согласие с
-                    <a href="#" className={style.auth__link}>
+                    <a href="/privacy.html" target="_blank" className={style.auth__link}>
                         Условиями предоставления услуг
                     </a>
                 </Description>
