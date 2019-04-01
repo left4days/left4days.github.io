@@ -21,7 +21,7 @@ function getIcon(icon) {
 
 function HomeLabels() {
     return (
-        <Row jc="space-between" ai="center">
+        <Row jc="space-between" ai="center" className={style.home__labels}>
             {config.map((item, i) => {
                 const { icon, text } = item;
                 return (

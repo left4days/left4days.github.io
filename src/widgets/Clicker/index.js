@@ -85,10 +85,12 @@ class Clicker extends React.PureComponent {
         return (
             <Column className={style.clicker}>
                 <p className={style.clicker__title}>Ты сделал уже</p>
-                <button className={style.clicker__button} onClick={this.handleClick}>
-                    <img className={style.clicker__img} src={handIcon} alt="hand-icon" />
+                <div className={style.clicker__button}>
                     <p className={style.clicker__count}>{displayedClicks}</p>
                     <p className={style.clicker__text}>кликов</p>
+                </div>
+                <button className={style.clicker__btn} onClick={this.handleClick}>
+                    <img className={style.clicker__img} src={handIcon} alt="hand-icon" />
                 </button>
             </Column>
         );

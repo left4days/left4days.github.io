@@ -83,11 +83,6 @@ $brown: #484848;
   }
 }
 
-@mixin container-size() {
-  width: 1280px;
-  margin: auto;
-}
-
 @mixin main-font($weight) {
   font-family: "Montserrat", sans-serif;
   font-weight: $weight;
@@ -124,5 +119,43 @@ body {
   background-position: top center;
   > * {
     box-sizing: border-box;
+  }
+}
+
+// Responsive settings
+$screenSizes: (
+        desktop: 1320px,
+        tablet: 991px,
+        mobile: 768px,
+        mobile-small: 480px,
+);
+
+@mixin screen-gt($name) {
+  @media only screen and (min-width: #{map-get($screenSizes, $name)}) {
+    @content;
+  }
+}
+
+@mixin screen-lt($name) {
+  @media only screen and (max-width: #{map-get($screenSizes, $name)}) {
+    @content;
+  }
+}
+
+@mixin container-size() {
+  width: 1320px;
+  margin: auto;
+  padding: 0 20px;
+  @include screen-lt(desktop) {
+    width: 100%;
+  }
+}
+
+@mixin bgImage($image) {
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-image: url($image);
+  @include screen-lt(mobile-small) {
+    background-position: 51% 0;
   }
 }

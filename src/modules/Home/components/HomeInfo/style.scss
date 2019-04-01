@@ -8,6 +8,9 @@
   height: 112px;
   background-image: url($bgImage);
   background-repeat: no-repeat;
+  @include screen-lt(mobile-small) {
+    display: none;
+  }
 
 }
 
@@ -28,6 +31,12 @@
     }
     &:after {
       @include pseudo(auto, 0, '../../../../statics/shade2.png');
+    }
+    @include screen-lt(tablet) {
+      margin: 0 0 10px 0;
+    }
+    @include screen-lt(mobile) {
+      width: 100%;
     }
 
     &_description {
