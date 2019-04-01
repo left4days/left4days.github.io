@@ -1,11 +1,28 @@
 .home {
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-image: url('../../statics/bg.png');
-  min-height: 1930px;
+  z-index: 2;
   display: block;
+  min-height: 1930px;
+  @include bgImage('../../statics/bg/1.jpg');
+  &__background {
+    &_1 {
+      background-image: url('../../statics/bg/1.jpg');
+    }
+    &_2 {
+      background-image: url('../../statics/bg/2.jpg');
+    }
+    &_3 {
+      background-image: url('../../statics/bg/3.jpg');
+    }
+    &_4 {
+      background-image: url('../../statics/bg/4.jpg');
+    }
+  }
 
   &__container {
     @include container-size;
   }
+}
+
+.app {
+  @include bgImage('../../statics/bg/1.jpg');
 }

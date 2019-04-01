@@ -8,6 +8,9 @@
   height: 112px;
   background-image: url($bgImage);
   background-repeat: no-repeat;
+  @include screen-lt(mobile-small) {
+    display: none;
+  }
 
 }
 
@@ -21,13 +24,19 @@
     flex-direction: column;
     border-radius: 5px;
     align-items: center;
-    margin: 75px 0 30px 0;
+    margin: 75px 0 110px 0;
     padding: 20px;
     &:before {
       @include pseudo(0, auto, '../../../../statics/shade.png');
     }
     &:after {
       @include pseudo(auto, 0, '../../../../statics/shade2.png');
+    }
+    @include screen-lt(tablet) {
+      margin: 0 0 10px 0;
+    }
+    @include screen-lt(mobile) {
+      width: 100%;
     }
 
     &_description {
