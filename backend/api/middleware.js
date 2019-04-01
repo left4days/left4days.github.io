@@ -12,7 +12,7 @@ async function requiresAuth(req, res, next) {
     try {
         decodedIdToken = await authService.verifyIdToken(idToken);
     } catch (error) {
-        next(error);
+        res.status(501).json({ success: false, errorMessage: 'Verify token firebase failed' });
         return;
     }
 
@@ -27,7 +27,7 @@ async function requiresAdmin(req, res, next) {
     try {
         decodedIdToken = await authService.verifyIdToken(idToken);
     } catch (error) {
-        next(error);
+        res.status(501).json({ success: false, errorMessage: 'Verify token firebase failed' });
         return;
     }
     const { uid } = decodedIdToken;
