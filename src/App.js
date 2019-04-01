@@ -77,10 +77,20 @@ class App extends Component {
                 <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
                 <div className="app">
                     {routes.map(route => {
-                        const { path, exact, component } = route;
-                        return <Route key={path} path={path} exact={exact} component={component} user={user} />;
+                        const { path, exact, Component } = route;
+                        return (
+                            <Route
+                                key={path}
+                                path={path}
+                                exact={exact}
+                                component={() => <Component user={user} handleModal={this.handleModal} />}
+                            />
+                        );
                     })}
                 </div>
+                <a href="/privacy.html" className="footer">
+                    Политика конфиденциальности
+                </a>
                 <Modal modal={modal} handleModal={this.handleModal} onClose={this.handleModalClose} />
             </Router>
         );

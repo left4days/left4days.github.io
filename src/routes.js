@@ -5,23 +5,23 @@ import { AuthPage } from './modules/AuthPage';
 export default [
     {
         path: '/',
-        component: Home,
+        Component: Home,
         exact: true,
     },
     {
         path: '/admin',
-        component: AdminPanel,
+        Component: AdminPanel,
     },
     {
         path: '/auth',
-        component: AuthPage,
+        Component: AuthPage,
         componentProps: {
             authType: 'auth',
         },
     },
     {
         path: '/register',
-        component: AuthPage,
+        Component: AuthPage,
         componentProps: {
             authType: 'register',
         },

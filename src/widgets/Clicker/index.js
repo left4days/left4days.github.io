@@ -71,7 +71,11 @@ class Clicker extends React.PureComponent {
 
     handleClick = () => {
         const { getConfirmedClicks } = this.props;
+        const { user, handleModal } = this.props;
         const { displayedClicks, currentSeriesCount, confirmedClicks } = this.state;
+        if (!user) {
+            return handleModal('auth');
+        }
 
         this.setState(
             { currentSeriesCount: currentSeriesCount + 1, displayedClicks: displayedClicks + 1 },

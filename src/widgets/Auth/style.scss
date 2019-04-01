@@ -19,8 +19,13 @@
   border: 2px solid $orange;
   border-radius: 50%;
   margin-right: 15px;
+  outline: none;
+  cursor: pointer;
   &:last-child {
     margin-right: 0;
+  }
+  &:hover {
+    opacity: .7;
   }
 
   &__container {
