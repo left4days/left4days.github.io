@@ -25,7 +25,7 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null, user: 'loading', actionState: 'FINISHED' };
+    state = { modal: null, user: 'loading', actionState: 'ACTIVE' };
 
     componentWillMount() {
         firebase.auth().onAuthStateChanged(res => {
@@ -72,7 +72,6 @@ class App extends Component {
         if (actionState === 'DEV' && !isDevMode) {
             return <DevelopTower onValidChange={this.onDevValidChange} />;
         }
-
         return (
             <Router>
                 <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
@@ -84,7 +83,9 @@ class App extends Component {
                                 key={path}
                                 path={path}
                                 exact={exact}
-                                component={() => <Component user={user} handleModal={this.handleModal} />}
+                                component={() => (
+                                    <Component user={user} actionState={actionState} handleModal={this.handleModal} />
+                                )}
                             />
                         );
                     })}

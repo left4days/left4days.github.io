@@ -11,6 +11,17 @@ import style from './style.scss';
 
 const DEBOUNCE = 2000; //ms
 
+function renderButton(actionState, onClick) {
+    if (actionState === 'FINISHED') {
+        return null;
+    }
+    return (
+        <button className={style.clicker__btn} onClick={onClick}>
+            <img className={style.clicker__img} src={handIcon} alt="hand-icon" />
+        </button>
+    );
+}
+
 class Clicker extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -86,6 +97,7 @@ class Clicker extends React.PureComponent {
 
     render() {
         const { displayedClicks } = this.state;
+        const { actionState, user } = this.props;
         return (
             <Column className={style.clicker}>
                 <p className={style.clicker__title}>Ты сделал уже</p>
@@ -93,9 +105,7 @@ class Clicker extends React.PureComponent {
                     <p className={style.clicker__count}>{displayedClicks}</p>
                     <p className={style.clicker__text}>кликов</p>
                 </div>
-                <button className={style.clicker__btn} onClick={this.handleClick}>
-                    <img className={style.clicker__img} src={handIcon} alt="hand-icon" />
-                </button>
+                {renderButton(actionState, this.handleClick)}
             </Column>
         );
     }

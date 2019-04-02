@@ -8,6 +8,13 @@ import { HomeInfo } from './components/HomeInfo';
 import { countLabel } from './components/HomeInfo/helpers.js';
 import style from './style.scss';
 
+function renderBg(confirmedClicks, actionState) {
+    if (actionState === 'FINISHED') {
+        return style.home__background_5;
+    }
+    return style[`home__background_${countLabel(confirmedClicks).background}`];
+}
+
 class Home extends React.Component {
     state = { confirmedClicks: 0 };
 
@@ -20,18 +27,19 @@ class Home extends React.Component {
 
     render() {
         const { confirmedClicks } = this.state;
-        const { user, handleModal } = this.props;
+        const { user, handleModal, actionState } = this.props;
         return (
-            <Column className={cx(style.home, style[`home__background_${countLabel(confirmedClicks).background}`])}>
+            <Column className={cx(style.home, renderBg(confirmedClicks, actionState))}>
                 <Column className={style.home__container}>
                     <Column>
                         <HomeHeader />
                         <HomeLabels />
                         <Column ai="center">
-                            <HomeInfo confirmedClicks={confirmedClicks} />
+                            <HomeInfo confirmedClicks={confirmedClicks} actionState={actionState} />
                             <Clicker
                                 getConfirmedClicks={this.getConfirmedClicks}
                                 user={user}
+                                actionState={actionState}
                                 handleModal={handleModal}
                             />
                         </Column>

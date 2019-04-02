@@ -35,7 +35,7 @@ class HeaderAuthAuthorized extends React.Component {
 
     render() {
         const {
-            user: { email, userData = {} },
+            user: { email, userData = {}, displayName = '' },
             signOutUser,
         } = this.props;
         const { login = '', clicks = 0, email: socialEmail } = userData;
@@ -45,7 +45,7 @@ class HeaderAuthAuthorized extends React.Component {
             <Row jc="flex-end" ai="center" className={style.header__authorized}>
                 <div>
                     <p onClick={this.handleOpenDropdown}>
-                        <b>{login}</b>
+                        <b>{login || displayName}</b>
                     </p>
                     <p className={style.header__user} onClick={this.handleOpenDropdown}>
                         {email || socialEmail}

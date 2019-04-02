@@ -14,7 +14,6 @@ class DevelopTower extends React.PureComponent {
     onSubmit = () => {
         const model = this.form.getModel();
         const { onValidChange } = this.props;
-        console.log('model', model);
 
         axios.post('/api/v1/appState/check-dev', model).then(res => {
             const isValid = get(res, 'data.data', false);

@@ -10,6 +10,7 @@ const VALIDATION_ERRORS = {
     'auth/invalid-email': 'Неверно указан email',
     'auth/operation-not-allowed': 'Аккаунт отключен',
     'auth/wrong-password': 'Неверный пароль или емейл',
+    'auth/email-already-exists': 'Указанный адрес электронной почты уже используется.',
 };
 
 export function getValidationError(error) {
