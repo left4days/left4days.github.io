@@ -9,9 +9,6 @@ async function requiresAuth(req, res, next) {
     const idToken = req.header('firebase_auth_token');
     let decodedIdToken;
 
-    console.log('RAW', req.rawHeaders);
-    console.log('HIGH', req.header('firebase_auth_token'));
-
     try {
         decodedIdToken = await authService.verifyIdToken(idToken);
     } catch (error) {
@@ -26,9 +23,6 @@ async function requiresAuth(req, res, next) {
 async function requiresAdmin(req, res, next) {
     const idToken = req.header('firebase_auth_token');
     let decodedIdToken;
-
-    console.log('RAW', req.rawHeaders);
-    console.log('HIGH', req.header('firebase_auth_token'));
 
     try {
         decodedIdToken = await authService.verifyIdToken(idToken);

@@ -56,9 +56,9 @@ class UserService {
 
     async registerNewUser(data) {
         const { uid, login, registerBy, email } = data;
-        console.log('datauid', data);
+
         try {
-            await userRef.update({
+            return await userRef.update({
                 [uid]: {
                     role: 'user',
                     registerBy,

@@ -102,14 +102,15 @@ class Auth extends React.Component {
     onSubmit = () => {
         const { authType = 'auth' } = this.props;
         const model = this.form.getModel();
-        const { login, registerBy, email } = model;
+        const { login, registerBy = 'email', email } = model;
+
         getAuthAction(authType, model)
             .then(async res => {
                 const { user = {} } = res || {};
                 const uid = get(res, 'user.uid', '');
                 const data = { login, registerBy, uid, email };
-
                 const options = await getFirebaseHeaderToken();
+
                 return axios.post('api/v1/user', data, options);
             })
             .catch(error => {
