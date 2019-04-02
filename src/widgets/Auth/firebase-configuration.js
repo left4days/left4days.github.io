@@ -28,7 +28,6 @@ export function resetUser(email) {
 }
 
 export function signWithSocial(type) {
-    console.log(type);
     if (type === 'vk') {
         return signInWithVK();
     }
@@ -43,7 +42,6 @@ export function signInWithVK() {
     const newWin = window.open(url, 'vk-login', 'width=665,height=370');
     newWin.onload = function() {
         let hash = newWin.location.hash;
-        console.log(getAllUrlParams(hash));
         const { access_token, user_id, email } = getAllUrlParams(hash);
         if (access_token) {
             return axios.post('/api/v1/custom-register', { user_id }).then(res => {
