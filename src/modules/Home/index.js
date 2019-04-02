@@ -24,11 +24,17 @@ class Home extends React.Component {
         return (
             <Column className={cx(style.home, style[`home__background_${countLabel(confirmedClicks).background}`])}>
                 <Column className={style.home__container}>
-                    <HomeHeader />
-                    <HomeLabels />
-                    <Column ai="center">
-                        <HomeInfo confirmedClicks={confirmedClicks} />
-                        <Clicker getConfirmedClicks={this.getConfirmedClicks} user={user} handleModal={handleModal} />
+                    <Column>
+                        <HomeHeader />
+                        <HomeLabels />
+                        <Column ai="center">
+                            <HomeInfo confirmedClicks={confirmedClicks} />
+                            <Clicker
+                                getConfirmedClicks={this.getConfirmedClicks}
+                                user={user}
+                                handleModal={handleModal}
+                            />
+                        </Column>
                     </Column>
                 </Column>
             </Column>

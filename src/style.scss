@@ -13,15 +13,17 @@
 }
 
 .footer {
-  font-size: 16px;
-  color: $white;
-  position: absolute;
-  bottom: 20px;
   z-index: 2;
   width: 100%;
   text-align: center;
-  &:hover {
-    text-decoration: underline;
+  background-color: $black;
+  padding: 20px 0;
+  a {
+    font-size: 16px;
+    color: $white;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

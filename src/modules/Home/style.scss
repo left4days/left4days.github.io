@@ -2,6 +2,8 @@
   z-index: 2;
   display: block;
   min-height: 1930px;
+  justify-content: space-between;
+  height: 100%;
   @include bgImage('../../statics/bg/1.jpg');
   &__background {
     &_1 {
@@ -20,6 +22,7 @@
 
   &__container {
     @include container-size;
+    height: 100%;
   }
 }
 

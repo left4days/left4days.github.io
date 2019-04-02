@@ -1,5 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
+import { Link } from 'react-router-dom';
 import { Input } from 'widgets/fields';
 import { Column } from 'ui/Layout';
 import { Button } from 'ui/Button';
@@ -36,9 +37,9 @@ function BottomPanel(props) {
             return (
                 <Description>
                     Нажимая на кнопку Зарегистрироваться, вы подтверждаете свое согласие с
-                    <a href="/privacy.html" target="_blank" className={style.auth__link}>
+                    <Link to="/policy" target="_blank" className={style.auth__link}>
                         Условиями предоставления услуг
-                    </a>
+                    </Link>
                 </Description>
             );
         case 'login':
