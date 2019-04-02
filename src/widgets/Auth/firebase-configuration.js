@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { getAllUrlParams } from './helpers';
 import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
+import get from 'lodash/get';
 
 const PROVIDERS = {
     google: new firebase.auth.GoogleAuthProvider(),
@@ -31,7 +32,21 @@ export function signWithSocial(type) {
     if (type === 'vk') {
         return signInWithVK();
     }
-    firebase.auth().signInWithPopup(PROVIDERS[type]);
+    firebase
+        .auth()
+        .signInWithPopup(PROVIDERS[type])
+        .then(async res => {
+            const {
+                user: { providerData },
+            } = res;
+            const { uid, email, providerId, displayName } = providerData[0];
+            const data = { uid, login: displayName.replace(' ', '_'), email, registerBy: providerId };
+            const options = await getFirebaseHeaderToken();
+            return axios.post('api/v1/user', data, options);
+        })
+        .catch(function(error) {
+            return error.code;
+        });
 }
 
 export function signInWithVK() {
