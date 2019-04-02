@@ -23,11 +23,11 @@ function getUniqIndexes({ from, to, limit }) {
     }
 
     const res = [];
-    if (limit > to - from + 1) {
+    if (+limit > to - from + 1) {
         limit = to - from + 1;
     }
 
-    while (res.length < limit) {
+    while (res.length < +limit) {
         const currentIndex = randomInteger(from, to);
         if (res.indexOf(currentIndex) === -1) {
             res.push(currentIndex);

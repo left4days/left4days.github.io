@@ -2,6 +2,10 @@ const firebaseAdmin = require('firebase-admin');
 const db = firebaseAdmin.database();
 const appStateRef = db.ref('server/saving-data/fireblog/appState');
 
+const UserService = require('../services/UserService');
+
+const userService = new UserService();
+
 function stateFSM(currentState) {
     switch (currentState) {
         case 'DEV':
@@ -22,17 +26,24 @@ class AppStateService {
 
     async getAppState() {
         let state = 'ACTIVE';
+        let main_winner = '';
 
         await appStateRef.once('value', snap => {
-            const { actionState } = snap.val() || {};
+            const { actionState, mainWinner = '' } = snap.val() || {};
 
             if (typeof actionState === 'string') {
                 state = actionState;
-                return;
+                main_winner = mainWinner;
             }
         });
 
-        return state;
+        if (main_winner) {
+            main_winner = await userService.getUserById(main_winner);
+        }
+
+        const { email = '' } = main_winner;
+
+        return { state, mainWinnerEmail: email };
     }
 
     async checkDevAccess(password) {

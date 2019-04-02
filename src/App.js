@@ -41,7 +41,8 @@ class App extends Component {
         });
 
         axios.get('/api/v1/appState/state').then(res => {
-            this.setState({ actionState: res.data.data });
+            const { state, mainWinnerEmail } = get(res, 'data.data', {});
+            this.setState({ actionState: state, mainWinnerEmail });
         });
     }
 

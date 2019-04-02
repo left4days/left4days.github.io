@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import firebase from 'firebase';
+import get from 'lodash/get';
 
 import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
 import { Button } from 'ui/Button';
@@ -82,7 +83,8 @@ class AdminPanel extends React.PureComponent {
 
     getCurrentAppState = async () => {
         axios.get('/api/v1/appState/state').then(res => {
-            this.setState({ actionState: res.data.data });
+            const { state, mainWinnerEmail } = get(res, 'data.data', {});
+            this.setState({ actionState: state, mainWinnerEmail });
         });
     };
 
