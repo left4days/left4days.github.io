@@ -87,8 +87,8 @@ class ClickService {
                             clicks,
                         };
                     })
-                    .sort(sortByClicks)
-                    .slice(0, limit + 1);
+                    .slice(0, +limit)
+                    .sort(sortByClicks);
             });
         } catch (err) {
             console.log('ERROR DB GET TOP CLICKERS');
