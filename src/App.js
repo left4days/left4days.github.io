@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 import axios from 'axios';
 import get from 'lodash/get';
@@ -88,9 +89,9 @@ class App extends Component {
                         );
                     })}
                 </div>
-                <a href="/privacy.html" className="footer">
-                    Политика конфиденциальности
-                </a>
+                <div className="footer">
+                    <Link to="/policy">Политика конфиденциальности</Link>
+                </div>
                 <Modal modal={modal} handleModal={this.handleModal} onClose={this.handleModalClose} />
             </Router>
         );
