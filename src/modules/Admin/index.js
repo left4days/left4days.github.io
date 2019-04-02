@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import firebase from 'firebase';
+import get from 'lodash/get';
 
 import { getFirebaseHeaderToken } from 'widgets/requestsHelpers';
 import { Button } from 'ui/Button';
