@@ -27,23 +27,24 @@ class AppStateService {
     async getAppState() {
         let state = 'ACTIVE';
         let main_winner = '';
+        let main_winner_photo = '';
 
         await appStateRef.once('value', snap => {
-            const { actionState, mainWinner = '' } = snap.val() || {};
+            const { actionState, mainWinner = '', mainWinnerPhoto } = snap.val() || {};
 
             if (typeof actionState === 'string') {
                 state = actionState;
                 main_winner = mainWinner;
+                main_winner_photo = mainWinnerPhoto;
             }
         });
 
         if (main_winner) {
             main_winner = await userService.getUserById(main_winner);
         }
+        const { login = '', clicks = 0 } = main_winner;
 
-        const { email = '' } = main_winner;
-
-        return { state, mainWinnerEmail: email };
+        return { state, mainWinnerData: { login, main_winner_photo, clicks } };
     }
 
     async checkDevAccess(password) {

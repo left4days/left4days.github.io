@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { Column, Row } from 'ui/Layout';
+import { Title } from 'ui/Title';
 import { Clicker } from 'widgets/Clicker';
 import { HomeHeader } from './components/HomeHeader';
 import { HomeLabels } from './components/HomeLabels';
@@ -27,7 +28,7 @@ class Home extends React.Component {
 
     render() {
         const { confirmedClicks } = this.state;
-        const { user, handleModal, actionState } = this.props;
+        const { user, handleModal, actionState, mainWinnerData } = this.props;
         return (
             <Column className={cx(style.home, renderBg(confirmedClicks, actionState))}>
                 <Column className={style.home__container}>
@@ -35,7 +36,11 @@ class Home extends React.Component {
                         <HomeHeader />
                         <HomeLabels />
                         <Column ai="center">
-                            <HomeInfo confirmedClicks={confirmedClicks} actionState={actionState} />
+                            <HomeInfo
+                                confirmedClicks={confirmedClicks}
+                                actionState={actionState}
+                                mainWinnerData={mainWinnerData}
+                            />
                             <Clicker
                                 getConfirmedClicks={this.getConfirmedClicks}
                                 user={user}

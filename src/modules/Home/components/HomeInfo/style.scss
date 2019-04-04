@@ -48,5 +48,41 @@
     &_image {
       width: 120px;
     }
+    &_photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+    &_winner {
+      height: 250px;
+      width: 900px;
+      @include screen-lt(mobile) {
+        width: 100%;
+      }
+    }
+
+    &_margin {
+      margin-left: 15px;
+      width: auto;
+    }
+
+    &_client {
+      padding: 20px 0;
+    }
+
+    h2 {
+      @include main-font(700);
+    }
+
+    .title__size_l {
+      @include screen-lt(mobile) {
+        font-size: 24px;
+      }
+    }
+    .title__size_m {
+      @include screen-lt(mobile) {
+        font-size: 18px;
+      }
+    }
   }
 }

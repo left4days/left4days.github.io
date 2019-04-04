@@ -25,7 +25,7 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null, user: 'loading', actionState: 'ACTIVE' };
+    state = { modal: null, user: 'loading', actionState: 'ACTIVE', mainWinnerData: {} };
 
     componentWillMount() {
         firebase.auth().onAuthStateChanged(res => {
@@ -41,8 +41,8 @@ class App extends Component {
         });
 
         axios.get('/api/v1/appState/state').then(res => {
-            const { state, mainWinnerEmail } = get(res, 'data.data', {});
-            this.setState({ actionState: state, mainWinnerEmail });
+            const { state, mainWinnerData } = get(res, 'data.data', {});
+            this.setState({ actionState: state, mainWinnerData });
         });
     }
 
@@ -67,7 +67,7 @@ class App extends Component {
     };
 
     render() {
-        const { modal, user, actionState } = this.state;
+        const { modal, user, actionState, mainWinnerData } = this.state;
         const isDevMode = !!window.localStorage.getItem('devMode');
 
         if (actionState === 'DEV' && !isDevMode) {
@@ -85,7 +85,12 @@ class App extends Component {
                                 path={path}
                                 exact={exact}
                                 component={() => (
-                                    <Component user={user} actionState={actionState} handleModal={this.handleModal} />
+                                    <Component
+                                        user={user}
+                                        actionState={actionState}
+                                        mainWinnerData={mainWinnerData}
+                                        handleModal={this.handleModal}
+                                    />
                                 )}
                             />
                         );

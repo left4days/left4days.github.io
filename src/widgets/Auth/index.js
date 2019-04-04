@@ -133,7 +133,16 @@ class Auth extends React.Component {
                     onInvalid={this.onInvalid}
                 >
                     {config[authType].map((item, i) => {
-                        const { type, id, name, placeholder, validations, validationsError, margin } = item;
+                        const {
+                            type,
+                            id,
+                            name,
+                            placeholder,
+                            validations,
+                            validationsError,
+                            margin,
+                            autoComplete,
+                        } = item;
                         return (
                             <Input
                                 validations={getValidationForField(validations)}
@@ -142,6 +151,7 @@ class Auth extends React.Component {
                                 validationError={validationsError}
                                 required
                                 type={type}
+                                autoComplete={autoComplete}
                                 id={id}
                                 placeholder={placeholder}
                                 name={name}

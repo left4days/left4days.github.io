@@ -4,11 +4,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  z-index: 2;
+  z-index: 6;
   top: 0;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+  animation-name: animate-in;
+  animation-duration: .2s;
 
   &_open {
     display: flex;
@@ -22,9 +24,12 @@
     z-index: 20;
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: center;
     flex-direction: column;
     border-radius: 5px;
+    animation-name: animate-modal-in;
+    animation-duration: .2s;
   }
   &_close {
     border: 2px solid $orange;
@@ -47,5 +52,23 @@
     &:hover {
       background-color: #551E00;
     }
+  }
+}
+
+@keyframes animate-in {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes animate-modal-in {
+  0% {
+    top: -10px
+  }
+  100% {
+    top: 0;
   }
 }

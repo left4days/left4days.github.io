@@ -6,7 +6,8 @@
       "name": "login",
       "placeholder": "Логин",
       "validations": "login",
-      "validationsError": "Логин должен содержать от 4 до 8 латинских букв"
+      "validationsError": "Логин должен содержать от 4 до 8 латинских символов",
+      "autoComplete": "username"
     },
     {
       "type": "email",
@@ -15,7 +16,8 @@
       "margin": "top_x2",
       "placeholder": "Электронная почта",
       "validations": "email",
-      "validationsError": "Формат Email не верен"
+      "validationsError": "Формат Email не верен",
+      "autoComplete": "email"
     },
     {
       "type": "password",
@@ -24,7 +26,8 @@
       "margin": "top_x2",
       "placeholder": "Пароль",
       "validations": "password",
-      "validationsError": "Пароль должен содержать минимум одну цифру и букву"
+      "validationsError": "Пароль должен содержать минимум одну цифру и букву",
+      "autoComplete": "new-password"
     }
   ],
   "login": [
@@ -35,7 +38,8 @@
       "margin": "top_x2",
       "placeholder": "Электронная почта",
       "validations": "email",
-      "validationsError": ""
+      "validationsError": "",
+      "autoComplete": "email"
     },
     {
       "type": "password",
@@ -44,7 +48,8 @@
       "margin": "top_x2",
       "placeholder": "Пароль",
       "validations": "password",
-      "validationsError": ""
+      "validationsError": "",
+      "autoComplete": "current-password"
     }
   ],
   "reset": [
@@ -55,7 +60,8 @@
       "margin": "top_x2",
       "placeholder": "Электронная почта",
       "validations": "email",
-      "validationsError": "Формат Email не верен"
+      "validationsError": "Формат Email не верен",
+      "autoComplete": "email"
     }
   ]
 }

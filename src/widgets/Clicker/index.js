@@ -22,6 +22,28 @@ function renderButton(actionState, onClick) {
     );
 }
 
+function renderText(actionState, displayedClicks) {
+    if (actionState === 'FINISHED') {
+        return (
+            <Column>
+                <p className={style.clicker__title}>-</p>
+                <div className={style.clicker__button}>
+                    <p className={style.clicker__text}>Акция завершена</p>
+                </div>
+            </Column>
+        );
+    }
+    return (
+        <Column>
+            <p className={style.clicker__title}>Ты сделал уже</p>
+            <div className={style.clicker__button}>
+                <p className={style.clicker__count}>{displayedClicks}</p>
+                <p className={style.clicker__text}>кликов</p>
+            </div>
+        </Column>
+    );
+}
+
 class Clicker extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -100,11 +122,7 @@ class Clicker extends React.PureComponent {
         const { actionState, user } = this.props;
         return (
             <Column className={style.clicker}>
-                <p className={style.clicker__title}>Ты сделал уже</p>
-                <div className={style.clicker__button}>
-                    <p className={style.clicker__count}>{displayedClicks}</p>
-                    <p className={style.clicker__text}>кликов</p>
-                </div>
+                {renderText(actionState, displayedClicks)}
                 {renderButton(actionState, this.handleClick)}
             </Column>
         );
