@@ -1,4 +1,4 @@
-const { requiresAuth } = require('./middleware');
+const { requiresAuth, requiresAdmin } = require('./middleware');
 const ClickService = require('../services/ClickService');
 
 const clickService = new ClickService();
@@ -19,7 +19,13 @@ async function getUserClicks(req, res, next) {
     res.json({ success: true, data: { confirmedClicks } });
 }
 
+async function getAllUserClicks(req, res, next) {
+    const result = await clickService.getAllUsersAndCkicks();
+
+    res.json({ success: true, data: result });
+}
+
 module.exports = {
-    GET: [['/api/v1/click/:uid', requiresAuth, getUserClicks]],
+    GET: [['/api/v1/click/:uid', requiresAuth, getUserClicks], ['/api/v1/clicks', requiresAdmin, getAllUserClicks]],
     POST: [['/api/v1/click/', requiresAuth, updateUserClicks]],
 };

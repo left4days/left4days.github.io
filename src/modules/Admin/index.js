@@ -62,6 +62,8 @@ class AdminPanel extends React.PureComponent {
             winners: [],
             isUserAdmin: false,
             actionState: 'ACTIVE',
+            clicks: 0,
+            users: 0,
         };
     }
 
@@ -69,6 +71,7 @@ class AdminPanel extends React.PureComponent {
         firebase.auth().onAuthStateChanged(() => {
             this.getCurrentAppState();
             this.getCurrentWinners();
+            this.getSummaryInfo();
 
             return this.updateTop10();
         });
@@ -102,6 +105,16 @@ class AdminPanel extends React.PureComponent {
         });
     };
 
+    getSummaryInfo = async () => {
+        const options = await getFirebaseHeaderToken();
+        axios.get('/api/v1/clicks', options).then(res => {
+            const { users, clicks } = get(res, 'data.data', false);
+            if (users && clicks) {
+                this.setState({ users, clicks });
+            }
+        });
+    };
+
     switchAppState = async currentState => {
         const { actionState } = this.state;
         const options = await getFirebaseHeaderToken();
@@ -125,7 +138,7 @@ class AdminPanel extends React.PureComponent {
     };
 
     render() {
-        const { isUserAdmin, actionState, winners, topClickers } = this.state;
+        const { isUserAdmin, actionState, winners, topClickers, users, clicks } = this.state;
 
         if (!isUserAdmin) {
             return <Title containerClassName={style.admin__rejected}>You have no permissions to see this page</Title>;
@@ -139,10 +152,14 @@ class AdminPanel extends React.PureComponent {
                         <Button style="void" margin="left" onClick={this.getAllUsers}>
                             Выгрузить полный список участников
                         </Button>
+                        <Row jc="flex-end" className={style['admin__header-summary']}>
+                            <p>Участников: {users}</p>
+                            <p>Кликов: {clicks}</p>
+                        </Row>
                     </Row>
                     <Column>
                         <Table
-                            text="30 победителей"
+                            text="300 победителей"
                             onClick={this.determineWinners}
                             buttonText="Определить"
                             data={winners}

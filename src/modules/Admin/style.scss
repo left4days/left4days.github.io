@@ -16,6 +16,18 @@
     padding: 40px 0;
   }
 
+  &__header-summary {
+    flex: 1 1 auto;
+    width: auto;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+
+    p {
+      margin-left: 15px;
+    }
+  }
+
   .ux-button {
     width: auto;
   }
