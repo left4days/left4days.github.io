@@ -84,10 +84,16 @@ function ErrorText({ error }) {
 }
 
 class Auth extends React.Component {
-    state = {
-        valid: false,
-        error: '',
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            valid: false,
+            error: '',
+        };
+
+        this.tryRegisterID = 0;
+    }
 
     formRef = ref => (this.form = ref);
 
@@ -98,6 +104,17 @@ class Auth extends React.Component {
     onInvalid = () => {
         this.setState({ valid: false });
     };
+
+    componentDidMount() {
+        const { authType } = this.props;
+        this.tryRegisterID = setTimeout(() => {
+            ym(53569510, 'reachGoal', 'registration_try');
+        }, 5000);
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.tryRegisterID);
+    }
 
     onSubmit = () => {
         const { authType = 'auth' } = this.props;
@@ -110,6 +127,8 @@ class Auth extends React.Component {
                 const uid = get(res, 'user.uid', '');
                 const data = { login, registerBy, uid, email };
                 const options = await getFirebaseHeaderToken();
+
+                ym(53569510, 'reachGoal', 'registration');
 
                 return axios.post('api/v1/user', data, options);
             })
