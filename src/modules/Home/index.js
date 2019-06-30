@@ -29,6 +29,7 @@ class Home extends React.Component {
     render() {
         const { confirmedClicks } = this.state;
         const { user, handleModal, actionState, mainWinnerData, product_link } = this.props;
+
         return (
             <Column className={cx(style.home, renderBg(confirmedClicks, actionState))}>
                 <Column className={style.home__container}>
