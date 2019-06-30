@@ -16,7 +16,6 @@ function Input({
     readonly,
     extraClass,
     placeholder,
-    onEnterPress,
     type,
     name,
     id,
@@ -24,11 +23,6 @@ function Input({
 }) {
     const className = cx(style['ux-input'], { [style['ux-input_disabled']]: disabled }, extraClass);
 
-    const _handleKeyPress = e => {
-        if (e.key === 'Enter') {
-            onEnterPress();
-        }
-    };
     if (mask) {
         return (
             <MaskedInput
@@ -47,7 +41,6 @@ function Input({
                 className={className}
                 placeholder={placeholder}
                 placeholderChar={'\u2000'}
-                onKeyPress={_handleKeyPress}
                 onChange={e => onChange(e.target.value)}
             />
         );
@@ -65,7 +58,6 @@ function Input({
             className={className}
             autoComplete={autoComplete}
             placeholder={placeholder}
-            onKeyPress={_handleKeyPress}
             onChange={onChange}
         />
     );

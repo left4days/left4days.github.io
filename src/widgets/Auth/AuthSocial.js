@@ -10,7 +10,6 @@ import style from './style.scss';
 
 const socialConfig = [
     { type: 'vk', icon: vkIcon },
-    { type: 'twitter', icon: twIcon },
     { type: 'facebook', icon: fbIcon },
     { type: 'google', icon: googleIcon },
 ];

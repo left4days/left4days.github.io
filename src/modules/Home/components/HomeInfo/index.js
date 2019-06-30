@@ -8,7 +8,7 @@ import style from './style.scss';
 
 function renderText(confirmedClicks, actionState) {
     if (actionState === 'FINISHED') {
-        return 'Акция завершена';
+        return null;
     }
     if (!confirmedClicks || confirmedClicks < 100) {
         return 'Кликай и зарабатывай очки!';

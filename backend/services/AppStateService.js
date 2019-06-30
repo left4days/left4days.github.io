@@ -27,14 +27,16 @@ class AppStateService {
     async getAppState() {
         let state = 'ACTIVE';
         let main_winner = '';
+        let product_link = '';
         let main_winner_photo = '';
 
         await appStateRef.once('value', snap => {
-            const { actionState, mainWinner = '', mainWinnerPhoto } = snap.val() || {};
+            const { actionState, mainWinner = '', productLink = '', mainWinnerPhoto } = snap.val() || {};
 
             if (typeof actionState === 'string') {
                 state = actionState;
                 main_winner = mainWinner;
+                product_link = productLink;
                 main_winner_photo = mainWinnerPhoto;
             }
         });
@@ -44,7 +46,7 @@ class AppStateService {
         }
         const { login = '', clicks = 0 } = main_winner;
 
-        return { state, mainWinnerData: { login, main_winner_photo, clicks } };
+        return { state, mainWinnerData: { login, main_winner_photo, clicks }, product_link };
     }
 
     async checkDevAccess(password) {

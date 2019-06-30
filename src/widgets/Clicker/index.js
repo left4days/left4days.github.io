@@ -24,14 +24,7 @@ function renderButton(actionState, onClick) {
 
 function renderText(actionState, displayedClicks) {
     if (actionState === 'FINISHED') {
-        return (
-            <Column>
-                <p className={style.clicker__title}>-</p>
-                <div className={style.clicker__button}>
-                    <p className={style.clicker__text}>Акция завершена</p>
-                </div>
-            </Column>
-        );
+        return null;
     }
     return (
         <Column>

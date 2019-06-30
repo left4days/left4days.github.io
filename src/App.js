@@ -25,7 +25,7 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-    state = { modal: null, user: 'loading', actionState: 'ACTIVE', mainWinnerData: {} };
+    state = { modal: null, user: 'loading', actionState: 'ACTIVE', mainWinnerData: {}, product_link: false };
 
     componentWillMount() {
         firebase.auth().onAuthStateChanged(res => {
@@ -41,8 +41,8 @@ class App extends Component {
         });
 
         axios.get('/api/v1/appState/state').then(res => {
-            const { state, mainWinnerData } = get(res, 'data.data', {});
-            this.setState({ actionState: state, mainWinnerData });
+            const { state, mainWinnerData, product_link } = get(res, 'data.data', {});
+            this.setState({ actionState: state, mainWinnerData, product_link });
         });
     }
 
@@ -67,12 +67,12 @@ class App extends Component {
     };
 
     render() {
-        const { modal, user, actionState, mainWinnerData } = this.state;
+        const { modal, user, actionState, mainWinnerData, product_link } = this.state;
         const isDevMode = !!window.localStorage.getItem('devMode');
-
         if (actionState === 'DEV' && !isDevMode) {
             return <DevelopTower onValidChange={this.onDevValidChange} />;
         }
+
         return (
             <Router>
                 <Header handleModal={this.handleModal} signOutUser={this.signOutUserAction} user={user} />
@@ -88,6 +88,7 @@ class App extends Component {
                                     <Component
                                         user={user}
                                         actionState={actionState}
+                                        product_link={product_link}
                                         mainWinnerData={mainWinnerData}
                                         handleModal={this.handleModal}
                                     />
