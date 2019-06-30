@@ -80,7 +80,7 @@ class UserService {
     }
 
     async generateWinners(params) {
-        const { limit = 30 } = params;
+        const { limit = 300 } = params;
 
         let participants = [];
         let winners = [];
@@ -118,7 +118,7 @@ class UserService {
     }
 
     async getWinners(params) {
-        const { limit = 30 } = params;
+        const { limit = 300 } = params;
         let winnerList = [];
 
         try {

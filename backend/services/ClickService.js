@@ -99,6 +99,24 @@ class ClickService {
 
         return res;
     }
+
+    async getAllUsersAndCkicks() {
+        const res = { clicks: 0, users: 0 };
+
+        try {
+            await clicksRef.once('value', snapshot => {
+                res.users = Object.keys(snapshot.val()).length;
+                res.clicks = Object.values(snapshot.val()).reduce((accum, value) => (accum += value), 0);
+            });
+        } catch (err) {
+            console.log('ERROR DB GET TOP CLICKERS');
+            console.log(err);
+
+            return res;
+        }
+
+        return res;
+    }
 }
 
 module.exports = ClickService;
