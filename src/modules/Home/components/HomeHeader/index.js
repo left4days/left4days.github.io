@@ -8,10 +8,20 @@ import product from 'statics/product.png';
 
 import style from './style.scss';
 
+function sendYMEvent() {
+    ym(53569510, 'reachGoal', 'clickBuyButton');
+}
+
 function renderButton(product_link) {
     if (product_link) {
         return (
-            <a className={style.home__header_btn} href={product_link} rel="noreferrer noopener" target="_blank">
+            <a
+                className={style.home__header_btn}
+                href={product_link}
+                rel="noreferrer noopener"
+                target="_blank"
+                onClick={sendYMEvent}
+            >
                 Купить
             </a>
         );
