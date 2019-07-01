@@ -8,11 +8,7 @@ import vkIcon from 'statics/social/vk.svg';
 
 import style from './style.scss';
 
-const socialConfig = [
-    { type: 'vk', icon: vkIcon },
-    { type: 'facebook', icon: fbIcon },
-    { type: 'google', icon: googleIcon },
-];
+const socialConfig = [{ type: 'vk', icon: vkIcon }, { type: 'google', icon: googleIcon }];
 
 function AuthSocial() {
     return (

@@ -8,7 +8,6 @@ import get from 'lodash/get';
 
 const PROVIDERS = {
     google: new firebase.auth.GoogleAuthProvider(),
-    facebook: new firebase.auth.FacebookAuthProvider(),
     twitter: new firebase.auth.TwitterAuthProvider(),
 };
 
