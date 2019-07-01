@@ -10,6 +10,8 @@ function getHref(login, email, registerBy) {
             return `mailto:${email}?subject=Поздравляем!%20Вы%20выиграли%20приз%20в%20конкурсе%20от%20Empire&amp;body="Test%20body"`;
         case 'vk':
             return `https://vk.com/${login}`;
+        case 'google.com':
+            return `mailto:${email}?subject=Поздравляем!%20Вы%20выиграли%20приз%20в%20конкурсе%20от%20Empire&amp;body="Test%20body"`;
         default:
             return '#';
     }

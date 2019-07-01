@@ -36,6 +36,7 @@ export function signWithSocial(type) {
         .auth()
         .signInWithPopup(PROVIDERS[type])
         .then(async res => {
+            console.log(res);
             const {
                 user: { providerData, uid, email, displayName },
             } = res;

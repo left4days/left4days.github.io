@@ -159,7 +159,7 @@ class AdminPanel extends React.PureComponent {
                     </Row>
                     <Column>
                         <Table
-                            text="300 победителей"
+                            text="30 победителей"
                             onClick={this.determineWinners}
                             buttonText="Определить"
                             data={winners}
