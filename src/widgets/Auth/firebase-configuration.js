@@ -37,9 +37,9 @@ export function signWithSocial(type) {
         .signInWithPopup(PROVIDERS[type])
         .then(async res => {
             const {
-                user: { providerData },
+                user: { providerData, uid, email, displayName },
             } = res;
-            const { uid, email, providerId, displayName } = providerData[0];
+            const { providerId } = providerData[0];
             const data = { uid, login: displayName.replace(' ', '_'), email, registerBy: providerId };
             const options = await getFirebaseHeaderToken();
             return axios.post('api/v1/user', data, options);
