@@ -9,7 +9,8 @@ import handIcon from 'statics/hand.svg';
 
 import style from './style.scss';
 
-const DEBOUNCE = 2000; //ms
+const DEBOUNCE = 1000; //ms
+const FORCE_UPDATE_CLICKS_AFTER = 20; //clicks
 
 function renderButton(actionState, onClick) {
     if (actionState === 'FINISHED') {
@@ -41,11 +42,10 @@ class Clicker extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.lastUpdatedTS = Date.now();
         this.timeoutId = null;
 
         this.state = {
-            confirmedClicks: 10,
+            confirmedClicks: 0,
             currentSeriesCount: 0,
             displayedClicks: 0,
         };
@@ -84,19 +84,22 @@ class Clicker extends React.PureComponent {
                     this.setState({ currentSeriesCount: currentSeriesCount + currentSerie });
                 });
         });
-
-        this.timeoutId = null;
-        this.lastUpdatedTS = Date.now();
     };
 
     debounceHandle() {
-        if (!this.timeoutId && Date.now() >= this.lastUpdatedTS + DEBOUNCE) {
+        const { currentSeriesCount } = this.state;
+        clearTimeout(this.timeoutId);
+
+        if (currentSeriesCount > FORCE_UPDATE_CLICKS_AFTER) {
+            this.registerClicks();
+            clearTimeout(this.timeoutId);
+            this.timeoutId = null;
+        } else {
             this.timeoutId = setTimeout(this.registerClicks, DEBOUNCE);
         }
     }
 
     handleClick = () => {
-        const { getConfirmedClicks } = this.props;
         const { user, handleModal } = this.props;
         const { displayedClicks, currentSeriesCount, confirmedClicks } = this.state;
         if (!user) {
@@ -105,14 +108,14 @@ class Clicker extends React.PureComponent {
 
         this.setState(
             { currentSeriesCount: currentSeriesCount + 1, displayedClicks: displayedClicks + 1 },
-            this.debounceHandle()
+            this.debounceHandle
         );
-        getConfirmedClicks(confirmedClicks);
     };
 
     render() {
         const { displayedClicks } = this.state;
         const { actionState, user } = this.props;
+
         return (
             <Column className={style.clicker}>
                 {renderText(actionState, displayedClicks)}
