@@ -40,7 +40,7 @@ function HomeHeader({ product_link }) {
             <Column jc="space-between">
                 <Column className={style.home__header_container}>
                     <Title size="l" color="white">
-                        Сокровище дракона!
+                        Сокровище дракона.
                     </Title>
                     <Title size="l" color="orange">
                         Разбей яйцо - получи приз!
