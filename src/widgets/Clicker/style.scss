@@ -48,6 +48,9 @@ $transitionActive: ease-in 150ms;
   &__img {
     width: 80px;
     margin-left: 30px;
+    @include screen-lt(mobile) {
+      margin-left: 0;
+    }
   }
   &__btn {
     background-color: transparent;
@@ -67,6 +70,15 @@ $transitionActive: ease-in 150ms;
       transition: $transitionHover;
       background-color: transparent;
       animation: none;
+    }
+    @include screen-lt(tablet) {
+      width: 80%;
+      margin-top: 100px;
+    }
+
+    @include screen-lt(mobile) {
+      width: 80%;
+      margin-top: 80px;
     }
   }
 }

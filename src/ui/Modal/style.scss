@@ -30,6 +30,9 @@
     border-radius: 5px;
     animation-name: animate-modal-in;
     animation-duration: .2s;
+    @include screen-lt(mobile) {
+      width: 98%;
+    }
   }
   &_close {
     border: 2px solid $orange;
@@ -51,6 +54,11 @@
     outline: none;
     &:hover {
       background-color: #551E00;
+    }
+    @include screen-lt(mobile) {
+      top: 5px;
+      right: 5px;
+      border: none;
     }
   }
 }

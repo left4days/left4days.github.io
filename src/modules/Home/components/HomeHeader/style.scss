@@ -8,8 +8,22 @@
       flex-direction: column;
     }
     &_container {
-      .title__container:first-child {
-        margin-bottom: 10px;
+      .title__container {
+        &:first-child {
+          margin-bottom: 10px;
+          @include screen-lt(mobile) {
+            h2 {
+              font-size: 28px;
+            }
+          }
+        }
+        &:last-child {
+          @include screen-lt(mobile) {
+            h2 {
+              font-size: 26px;
+            }
+          }
+        }
       }
     }
     &_btn {

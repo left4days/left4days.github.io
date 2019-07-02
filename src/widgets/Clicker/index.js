@@ -17,9 +17,11 @@ function renderButton(actionState, onClick) {
         return null;
     }
     return (
-        <button className={style.clicker__btn} onClick={onClick}>
-            <img className={style.clicker__img} src={handIcon} alt="hand-icon" />
-        </button>
+        <Column jc="center" ai="center">
+            <button className={style.clicker__btn} onClick={onClick}>
+                <img className={style.clicker__img} src={handIcon} alt="hand-icon" />
+            </button>
+        </Column>
     );
 }
 
