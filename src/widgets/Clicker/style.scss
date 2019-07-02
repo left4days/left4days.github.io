@@ -74,11 +74,17 @@ $transitionActive: ease-in 150ms;
     @include screen-lt(tablet) {
       width: 80%;
       margin-top: 100px;
+      &:active {
+        margin-top: 102px;
+      }
     }
 
     @include screen-lt(mobile) {
       width: 80%;
       margin-top: 80px;
+      &:active {
+        margin-top: 82px;
+      }
     }
   }
 }

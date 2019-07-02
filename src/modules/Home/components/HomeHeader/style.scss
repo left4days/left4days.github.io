@@ -121,12 +121,20 @@
       width: 3px;
       height: 45px;
       background-color: $orange;
+      @include screen-lt(mobile) {
+        top: 0px;
+      }
     }
     p {
       font-size: 15px;
       color: $white;
       @include main-font(300);
       opacity: .8;
+    }
+    .title__size_s {
+      @include screen-lt(mobile) {
+        font-size: 15px;
+      }
     }
   }
   &__product {
