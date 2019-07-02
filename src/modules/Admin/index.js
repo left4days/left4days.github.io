@@ -93,7 +93,7 @@ class AdminPanel extends React.PureComponent {
 
     updateTop10 = async () => {
         const options = await getFirebaseHeaderToken();
-        axios.get('/api/v1/user/top/10', options).then(res => {
+        axios.get('/api/v1/user/top/30', options).then(res => {
             this.setState({ topClickers: res.data.data, isUserAdmin: true });
         });
     };
@@ -144,6 +144,9 @@ class AdminPanel extends React.PureComponent {
             return <Title containerClassName={style.admin__rejected}>You have no permissions to see this page</Title>;
         }
 
+        const maxCapable = ((6 * (Date.now() - 1562011200000)) / 1000).toFixed(0);
+        const real = (0.05 * maxCapable).toFixed(0);
+
         return (
             <Column className={style.admin}>
                 <Column className={style.admin__container}>
@@ -165,7 +168,7 @@ class AdminPanel extends React.PureComponent {
                             data={winners}
                         />
                         <Table
-                            text="Топ-10 кликеров:"
+                            text={`Топ-30 кликеров: max ${maxCapable}, real ${real}`}
                             onClick={this.updateTop10}
                             buttonText="Обновить"
                             data={topClickers}

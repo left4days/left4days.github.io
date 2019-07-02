@@ -71,6 +71,11 @@ class Clicker extends React.PureComponent {
             return;
         }
 
+        if (currentSerie > 1000) {
+            this.setState({ currentSeriesCount: 0 });
+            return;
+        }
+
         this.setState({ currentSeriesCount: 0 }, async () => {
             const options = await getFirebaseHeaderToken();
             axios
@@ -90,13 +95,13 @@ class Clicker extends React.PureComponent {
         const { currentSeriesCount } = this.state;
         clearTimeout(this.timeoutId);
 
-        if (currentSeriesCount > FORCE_UPDATE_CLICKS_AFTER) {
-            this.registerClicks();
-            clearTimeout(this.timeoutId);
-            this.timeoutId = null;
-        } else {
-            this.timeoutId = setTimeout(this.registerClicks, DEBOUNCE);
-        }
+        // if (currentSeriesCount > FORCE_UPDATE_CLICKS_AFTER) {
+        //     this.registerClicks();
+        //     clearTimeout(this.timeoutId);
+        //     this.timeoutId = null;
+        // } else {
+        this.timeoutId = setTimeout(this.registerClicks, DEBOUNCE);
+        // }
     }
 
     handleClick = () => {
