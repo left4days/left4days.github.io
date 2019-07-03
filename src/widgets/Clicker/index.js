@@ -57,10 +57,12 @@ class Clicker extends React.PureComponent {
         firebase.auth().onAuthStateChanged(async res => {
             const uid = get(res, 'uid', '');
             const options = await getFirebaseHeaderToken();
+            const { getConfirmedClicks } = this.props;
 
             axios.get(`/api/v1/click/${uid}`, options).then(res => {
                 const confirmedClicks = get(res, 'data.data.confirmedClicks', 0);
                 this.setState({ confirmedClicks, displayedClicks: confirmedClicks });
+                getConfirmedClicks(confirmedClicks);
             });
         });
     }

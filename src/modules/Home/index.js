@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
 import { Column, Row } from 'ui/Layout';
-import { Title } from 'ui/Title';
 import { Clicker } from 'widgets/Clicker';
 import { HomeHeader } from './components/HomeHeader';
 import { HomeLabels } from './components/HomeLabels';
