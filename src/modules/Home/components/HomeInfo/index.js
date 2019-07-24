@@ -28,7 +28,6 @@ function HomeInfo({ confirmedClicks, actionState, mainWinnerData }) {
                         <img className={style.home__info_photo} src={main_winner_photo} alt="group-icon" />
                         <Column className={style.home__info_margin}>
                             <Title>{login}</Title>
-                            <Title>Кликов: {clicks}</Title>
                         </Column>
                     </Row>
                 </Column>
